@@ -48,7 +48,7 @@ var Game = {
         // Draw post-apocalyptic cracked grid background
         var graphics = game.add.graphics(0, 0);
         // Cyber grid
-        graphics.lineStyle(1, 0x00cccc, 0.2);
+        graphics.lineStyle(1, 'rgba(0, 204, 204, 0.8)', 0.2);
         for (var x = 0; x <= 600; x += squareSize) {
             graphics.moveTo(x, 0);
             graphics.lineTo(x, 450);
@@ -63,7 +63,7 @@ var Game = {
             var rx = Math.random() * 600;
             var ry = Math.random() * 450;
             var rustSpot = game.add.graphics(rx, ry);
-            rustSpot.beginFill(0x00cccc, Math.random() * 0.1);
+            rustSpot.beginFill('rgba(0, 204, 204, 0.8)', Math.random() * 0.1);
             rustSpot.drawCircle(0, 0, Math.random() * 15 + 5);
             rustSpot.endFill();
         }
@@ -172,14 +172,14 @@ var Game = {
             if (addNew) {
                 var newSegment = game.add.graphics(oldLastCellx, oldLastCelly);
                 // Post-apocalyptic rusty metal segment
-                newSegment.beginFill(0x00cccc, 0.9);
+                newSegment.beginFill('rgba(0, 204, 204, 0.8)', 0.9);
                 newSegment.drawRect(0, 0, squareSize, squareSize);
                 newSegment.endFill();
                 // Add rusty border
-                newSegment.lineStyle(1, 0x00cccc, 0.8);
+                newSegment.lineStyle(1, 'rgba(0, 204, 204, 0.8)', 0.8);
                 newSegment.drawRect(0, 0, squareSize, squareSize);
                 // Add metal shine effect
-                newSegment.beginFill(0x00cccc, 0.3);
+                newSegment.beginFill('rgba(0, 204, 204, 0.8)', 0.3);
                 newSegment.drawRect(1, 1, squareSize - 4, 2);
                 newSegment.endFill();
                 snake.unshift(newSegment);
@@ -266,14 +266,14 @@ var Game = {
         // Add a glowing energy cell (cyber food)
         apple = game.add.graphics(randomX, randomY);
         // Cyan glowing body
-        apple.beginFill(0x00cccc, 0.8);
+        apple.beginFill('rgba(0, 204, 204, 0.8)', 0.8);
         apple.drawRect(0, 0, squareSize, squareSize);
         apple.endFill();
         // White outline
-        apple.lineStyle(2, 0xffffff, 1);
+        apple.lineStyle(2, 'rgba(0, 204, 204, 0.8)', 1);
         apple.drawRect(0, 0, squareSize, squareSize);
         // Glowing center
-        apple.beginFill(0xffffff, 0.6);
+        apple.beginFill('rgba(0, 204, 204, 0.8)', 0.6);
         apple.drawRect(3, 3, squareSize - 6, squareSize - 6);
         apple.endFill();
     }
