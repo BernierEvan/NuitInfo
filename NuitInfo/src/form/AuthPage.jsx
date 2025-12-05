@@ -81,8 +81,8 @@ const AuthPage = ({ onAuthSuccess }) => {
                             type="button"
                             onClick={() => setIsLogin(true)}
                             className={`flex-1 py-3 rounded-lg font-bold transition-all ${isLogin
-                                    ? 'bg-blue-600 text-white shadow-lg'
-                                    : 'text-gray-500 hover:text-gray-700'
+                                ? 'bg-blue-600 text-white shadow-lg'
+                                : 'text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             Connexion
@@ -91,8 +91,8 @@ const AuthPage = ({ onAuthSuccess }) => {
                             type="button"
                             onClick={() => setIsLogin(false)}
                             className={`flex-1 py-3 rounded-lg font-bold transition-all ${!isLogin
-                                    ? 'bg-blue-600 text-white shadow-lg'
-                                    : 'text-gray-500 hover:text-gray-700'
+                                ? 'bg-blue-600 text-white shadow-lg'
+                                : 'text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             Inscription
@@ -160,8 +160,8 @@ const AuthPage = ({ onAuthSuccess }) => {
                             type="submit"
                             disabled={loading}
                             className={`w-full py-4 rounded-xl font-bold text-lg transition-all ${loading
-                                    ? 'bg-gray-300 cursor-not-allowed text-gray-500'
-                                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg hover:shadow-xl'
+                                ? 'bg-gray-300 cursor-not-allowed text-gray-500'
+                                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg hover:shadow-xl'
                                 }`}
                         >
                             {loading ? (
@@ -201,6 +201,7 @@ const AuthPage = ({ onAuthSuccess }) => {
                 </div>
             </div>
         </div>
+
     );
 };
 

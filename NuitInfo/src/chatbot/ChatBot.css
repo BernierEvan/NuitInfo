@@ -594,3 +594,50 @@ body {
 .nird-container.screensaver {
   animation: screenSaver 10s linear infinite;
 }
+
+/* --- EFFETS ET INDICATEURS --- */
+
+/* L'indicateur de frappe */
+.typing-indicator {
+    padding: 5px 10px;
+    font-style: italic;
+    color: #4CAF50; /* Vert terminal */
+    border-top: 1px solid #1a1a1a;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Effet glitch pour l'avatar */
+.nird-avatar.nird-glitch {
+    color: #ff00ff; /* Magenta ou une couleur de bug */
+    animation: glitch-anim 0.5s infinite alternate;
+}
+
+@keyframes glitch-anim {
+    0% {
+        transform: translate(1px, 1px) skew(1deg);
+        filter: blur(0.5px);
+    }
+    100% {
+        transform: translate(-1px, -1px) skew(-1deg);
+        filter: blur(0px);
+    }
+}
+
+/* Amélioration visuelle pour les messages system */
+.nird-message.system {
+    color: #ffd700; /* Or/Jaune pour les alertes */
+    font-style: italic;
+}
+
+/* Amélioration visuelle pour l'input et le prompt */
+.nird-input-container .prompt {
+    color: #4CAF50; /* Prompt en vert */
+    font-weight: bold;
+    margin-right: 5px;
+}

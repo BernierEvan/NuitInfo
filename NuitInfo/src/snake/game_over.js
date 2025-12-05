@@ -7,11 +7,11 @@ var Game_Over = {
             create : function() {
         
                 // Post-apocalyptic dark background
-                game.stage.backgroundColor = '#1a0f0a';
+                game.stage.backgroundColor = '#000000ff';
                 
                 // Create rusty border
                 var border = game.add.graphics(0, 0);
-                border.lineStyle(4, 0x8b4513, 1);
+                border.lineStyle(4, 0xffffff, 1);
                 border.drawRect(20, 20, 560, 410);
                 
                 // Create rusty grid pattern background
@@ -45,13 +45,13 @@ var Game_Over = {
                 // Add score information with pixel font style
                 game.add.text(300, 260, "LAST SCORE", { 
                     font: "bold 20px 'Courier New', monospace", 
-                    fill: "#a0826d", 
+                    fill: "#00cccc", 
                     align: "center"
                 }).anchor.setTo(0.5);
                 
                 game.add.text(300, 295, score.toString(), { 
                     font: "bold 32px 'Courier New', monospace", 
-                    fill: "#d4a574", 
+                    fill: "#00cccc", 
                     align: "center"
                 }).anchor.setTo(0.5);
                 
@@ -64,10 +64,10 @@ var Game_Over = {
                 
                 // Create rusty metal style button
                 var buttonBg = game.add.graphics(200, 370);
-                buttonBg.beginFill(0x8b4513, 1);
+                buttonBg.beginFill(0x000000, 1);
                 buttonBg.drawRect(0, 0, 200, 50);
                 buttonBg.endFill();
-                buttonBg.lineStyle(3, 0x654321, 1);
+                buttonBg.lineStyle(3, 0xffffff, 1);
                 buttonBg.drawRect(0, 0, 200, 50);
                 buttonBg.inputEnabled = true;
                 buttonBg.events.onInputDown.add(this.startGame, this);
@@ -75,25 +75,25 @@ var Game_Over = {
                 // Make button interactive with hover effect
                 buttonBg.events.onInputOver.add(function() {
                     buttonBg.clear();
-                    buttonBg.beginFill(0xa0522d, 0.9);
+                    buttonBg.beginFill(0x000000, 0.9);
                     buttonBg.drawRect(0, 0, 200, 50);
                     buttonBg.endFill();
-                    buttonBg.lineStyle(3, 0xd2691e, 1);
+                    buttonBg.lineStyle(3, 0xffffff, 1);
                     buttonBg.drawRect(0, 0, 200, 50);
                 }, this);
                 
                 buttonBg.events.onInputOut.add(function() {
                     buttonBg.clear();
-                    buttonBg.beginFill(0x8b4513, 1);
+                    buttonBg.beginFill(0x000000, 1);
                     buttonBg.drawRect(0, 0, 200, 50);
                     buttonBg.endFill();
-                    buttonBg.lineStyle(3, 0x654321, 1);
+                    buttonBg.lineStyle(3, 0x00cccc, 1);
                     buttonBg.drawRect(0, 0, 200, 50);
                 }, this);
                 
                 game.add.text(300, 395, "RETRY", { 
                     font: "bold 24px 'Courier New', monospace", 
-                    fill: "#1a0f0a", 
+                    fill: "#00cccc", 
                     align: "center"
                 }).anchor.setTo(0.5);
         
@@ -124,7 +124,7 @@ var Game_Over = {
                     graphics.beginFill(color);
                     
                     // Simple block letters
-                    graphics.drawRect(0, 0, letterWidth, letterHeight);
+                    graphics.drawRect(20, 0, letterWidth, letterHeight);
                     graphics.endFill();
                     
                     currentX += letterWidth + spacing;
@@ -149,7 +149,7 @@ var Game_Over = {
                         if(skull[row][col] === 1) {
                             var pixel = game.add.graphics(x + col * pixelSize, y + row * pixelSize);
                             pixel.beginFill(0xff0000);
-                            pixel.drawRect(0, 0, pixelSize, pixelSize);
+                            pixel.drawRect(10, 0, pixelSize, pixelSize);
                             pixel.endFill();
                         }
                     }

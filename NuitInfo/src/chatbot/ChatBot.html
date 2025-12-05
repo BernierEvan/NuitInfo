@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NIRD Chatbot - Dernier espoir de l'humanité</title>
     <link rel="stylesheet" href="./ChatBot.css">
-</head>
+    </head>
 <body>
-    <!-- Widget NIRD -->
     <div id="nird-widget" class="nird-container minimized">
         <div class="nird-header" onclick="toggleNird()">
             <span class="nird-title">NI#RRRRD v1.0.25</span>
@@ -25,6 +24,11 @@
                     <span class="message-text">Système démarré... ou presque ░▓█</span>
                 </div>
             </div>
+            
+            <div id="nird-typing" class="typing-indicator" style="display:none;">
+                <span class="timestamp">[${new Date().toLocaleTimeString()}]</span>
+                <span class="message-text">NIRD bugge... ou réfléchit...</span>
+            </div>
             <div class="nird-input-container">
                 <span class="prompt">&gt;</span>
                 <input 
@@ -38,6 +42,7 @@
             <div class="nird-commands">
                 <button onclick="executeCommand('/help')">?</button>
                 <button onclick="executeCommand('/reboot')">⟳</button>
+                <button onclick="executeCommand('/setname')">👤</button> 
             </div>
         </div>
     </div>
