@@ -1,0 +1,25 @@
+.center-container {
+  display: flex;
+  /* Enable flexbox for the container */
+  justify-content: center;
+  /* Center children horizontally */
+  align-items: center;
+  /* Center children vertically */
+  height: 100vh;
+  /* Take full viewport height */
+  width: 100vw;
+  /* Take full viewport width (optional, but good practice) */
+  background-color: black;
+  /* Match the dark background from the image */
+}
+
+/* 2. Optional: Style the text itself */
+.centered-text {
+  color: cyan;
+  /* Match the text color from the image */
+  font-family: monospace;
+  /* Use a monospaced font for a 'terminal' look */
+  /* Remove default margin from the <p> element */
+  margin: 0;
+  /* Add any other styling, e.g., font-size, text-shadow, etc. */
+}

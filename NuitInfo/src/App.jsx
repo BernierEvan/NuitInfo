@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { GameProvider } from './context/GameContext';
+import CinematicOverlay from './components/CinematicOverlay';
+import IntroMonologue from './components/IntroMonologue';
+import BuggedSequence from './components/BuggedSequence';
+import Lobby from './pages/Lobby';
+import Records from './pages/Records';
+import SnakeGame from './pages/SnakeGame';
+import SportQCM from './pages/SportQCM';
+import Profile from './pages/Profile';
+import './App.css';
+import './index.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showIntro, setShowIntro] = useState(true);
+  const [showBuggedSequence, setShowBuggedSequence] = useState(false);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    setShowBuggedSequence(true);
+    // Don't remove black background yet
+  };
+
+  const handleBuggedSequenceComplete = () => {
+    setShowBuggedSequence(false);
+    document.body.classList.remove('background-black-monologue');
+    document.body.classList.add('background-linear');
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <GameProvider>
+      <Router>
+        {showIntro ? (
+          // ONLY show intro - pitch black screen with blue text
+          <IntroMonologue onComplete={handleIntroComplete} />
+        ) : showBuggedSequence ? (
+          <BuggedSequence onComplete={handleBuggedSequenceComplete} />
+        ) : (
+          // ONLY show main app after Enter is pressed
+
+          <div className="App">
+
+            {/* Scanline effect */}
+            <div id="appbackground" className="background-Intro"></div>
+
+            {/* Routes */}
+            <Routes>
+              <Route path="/" element={<Lobby />} />
+              <Route path="/records" element={<Records />} />
+              <Route path="/bunker-snake" element={<SnakeGame />} />
+              <Route path="/assessment" element={<SportQCM />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </div>
+        )}
+      </Router>
+    </GameProvider >
+  );
 }
 
-export default App
+export default App;

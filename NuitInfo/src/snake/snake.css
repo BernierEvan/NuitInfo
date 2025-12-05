@@ -1,0 +1,466 @@
+/* ========================================
+   SNAKE GAME - Style Cyber Terminal NIRD
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #0a0a0a;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background cyber grid */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 204, 204, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 204, 204, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Effet de scan lignes CRT */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 204, 204, 0.02) 2px,
+        rgba(0, 204, 204, 0.02) 4px
+    );
+    pointer-events: none;
+    animation: scanline 8s linear infinite;
+    z-index: 10;
+}
+
+@keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Container principal */
+#game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Panneau de score - Style NIRD */
+#score-panel {
+    background: linear-gradient(180deg, #001a1a 0%, #000d0d 100%);
+    padding: 18px 35px;
+    border-radius: 5px;
+    border: 2px solid #00cccc;
+    box-shadow: 
+        0 0 20px rgba(0, 204, 204, 0.3),
+        0 0 40px rgba(0, 204, 204, 0.15),
+        inset 0 0 20px rgba(0, 204, 204, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+    min-width: 600px;
+    position: relative;
+}
+
+#score-panel::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 1px solid rgba(0, 204, 204, 0.5);
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+#score-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 10px,
+        rgba(0, 204, 204, 0.05) 10px,
+        rgba(0, 204, 204, 0.05) 11px
+    );
+    pointer-events: none;
+    border-radius: 5px;
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.score-label {
+    color: #00aaaa;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px rgba(0, 204, 204, 0.5);
+    opacity: 0.8;
+}
+
+.score-value {
+    color: #00cccc;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 
+        0 0 10px rgba(0, 204, 204, 0.6),
+        0 0 20px rgba(0, 204, 204, 0.3);
+    animation: scorePulse 2s ease-in-out infinite;
+}
+
+@keyframes scorePulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px rgba(0, 204, 204, 0.6),
+            0 0 20px rgba(0, 204, 204, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 15px rgba(0, 204, 204, 0.8),
+            0 0 30px rgba(0, 204, 204, 0.4);
+    }
+}
+
+/* Container du jeu - Style terminal */
+#game-container {
+    box-shadow: 
+        0 0 30px rgba(0, 204, 204, 0.4),
+        inset 0 0 30px rgba(0, 204, 204, 0.05);
+    border: 3px solid #00cccc;
+    border-radius: 3px;
+    position: relative;
+    background: #000000;
+}
+
+#game-container::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 1px solid rgba(0, 204, 204, 0.3);
+    pointer-events: none;
+    border-radius: 3px;
+}
+
+/* Bouton retour au menu - Style NIRD */
+#back-to-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 204, 204, 0.1);
+    border: 2px solid #00cccc;
+    color: #00cccc;
+    padding: 12px 24px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 
+        0 0 20px rgba(0, 204, 204, 0.3),
+        inset 0 0 10px rgba(0, 204, 204, 0.05);
+    transition: all 0.3s ease;
+    z-index: 100;
+    text-shadow: 0 0 5px rgba(0, 204, 204, 0.6);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#back-to-menu::before {
+    content: '◄';
+    font-size: 18px;
+}
+
+#back-to-menu::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 204, 204, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 5px;
+}
+
+#back-to-menu:hover {
+    background: rgba(0, 204, 204, 0.2);
+    border-color: #00ffff;
+    box-shadow: 
+        0 0 30px rgba(0, 204, 204, 0.5),
+        inset 0 0 15px rgba(0, 204, 204, 0.1);
+    transform: translateY(-2px);
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+#back-to-menu:hover::after {
+    opacity: 1;
+}
+
+#back-to-menu:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 
+        0 0 15px rgba(0, 204, 204, 0.4),
+        inset 0 0 10px rgba(0, 204, 204, 0.1);
+}
+
+/* Message NIRD Easter Egg */
+#nird-easter-egg {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #001a1a 0%, #003333 100%);
+    border: 2px solid #00cccc;
+    color: #00cccc;
+    padding: 15px 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 
+        0 0 25px rgba(0, 204, 204, 0.4),
+        inset 0 0 15px rgba(0, 204, 204, 0.08);
+    text-shadow: 0 0 5px rgba(0, 204, 204, 0.5);
+    max-width: 300px;
+    z-index: 100;
+    animation: slideInRight 0.5s ease, nirdGlow 2s ease-in-out infinite;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes nirdGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 25px rgba(0, 204, 204, 0.4),
+            inset 0 0 15px rgba(0, 204, 204, 0.08);
+    }
+    50% {
+        box-shadow: 
+            0 0 35px rgba(0, 204, 204, 0.6),
+            inset 0 0 20px rgba(0, 204, 204, 0.12);
+    }
+}
+
+#nird-easter-egg .nird-avatar-small {
+    display: inline-block;
+    font-size: 10px;
+    line-height: 1.1;
+    margin-right: 10px;
+    vertical-align: middle;
+    color: #00dddd;
+    text-shadow: 0 0 8px rgba(0, 221, 221, 0.6);
+}
+
+#nird-easter-egg strong {
+    color: #00ffff;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+#nird-easter-egg .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #00cccc;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+    opacity: 0.6;
+    transition: all 0.3s;
+    text-shadow: 0 0 5px rgba(0, 204, 204, 0.5);
+}
+
+#nird-easter-egg .close-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+/* Titre de la page */
+#game-title {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color: #00cccc;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 
+        0 0 10px rgba(0, 204, 204, 0.6),
+        0 0 20px rgba(0, 204, 204, 0.3);
+    z-index: 100;
+    animation: titleFlicker 3s ease-in-out infinite;
+}
+
+@keyframes titleFlicker {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px rgba(0, 204, 204, 0.6),
+            0 0 20px rgba(0, 204, 204, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 15px rgba(0, 204, 204, 0.8),
+            0 0 30px rgba(0, 204, 204, 0.5);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #score-panel {
+        min-width: auto;
+        width: calc(100% - 40px);
+        gap: 30px;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+    }
+    
+    .score-label {
+        font-size: 12px;
+    }
+    
+    .score-value {
+        font-size: 24px;
+    }
+    
+    #game-container {
+        width: calc(100vw - 40px) !important;
+        height: auto !important;
+    }
+    
+    #back-to-menu {
+        padding: 10px 18px;
+        font-size: 14px;
+        top: 10px;
+        left: 10px;
+    }
+    
+    #game-title {
+        top: 10px;
+        right: 10px;
+        font-size: 18px;
+    }
+    
+    #nird-easter-egg {
+        bottom: 10px;
+        right: 10px;
+        max-width: calc(100vw - 100px);
+        font-size: 12px;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    #game-wrapper {
+        gap: 10px;
+    }
+    
+    #score-panel {
+        padding: 12px 15px;
+        gap: 20px;
+    }
+    
+    .score-label {
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+    
+    .score-value {
+        font-size: 20px;
+    }
+    
+    #back-to-menu {
+        padding: 8px 15px;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    
+    #game-title {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+}
+
+/* Effets de glitch occasionnels */
+@keyframes glitchEffect {
+    0%, 90%, 100% {
+        transform: translate(0);
+    }
+    92% {
+        transform: translate(-2px, 1px);
+    }
+    94% {
+        transform: translate(2px, -1px);
+    }
+    96% {
+        transform: translate(-1px, -1px);
+    }
+    98% {
+        transform: translate(1px, 1px);
+    }
+}
+
+#score-panel {
+    animation: glitchEffect 8s infinite;
+}

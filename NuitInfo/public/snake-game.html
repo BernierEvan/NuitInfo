@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - NIRD Easter Egg</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0a0a0a;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 204, 204, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 204, 204, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 204, 204, 0.02) 2px,
+                    rgba(0, 204, 204, 0.02) 4px);
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        #game-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #score-panel {
+            background: linear-gradient(180deg, #001a1a 0%, #000d0d 100%);
+            padding: 18px 35px;
+            border-radius: 5px;
+            border: 2px solid #00cccc;
+            box-shadow:
+                0 0 20px rgba(0, 204, 204, 0.3),
+                0 0 40px rgba(0, 204, 204, 0.15),
+                inset 0 0 20px rgba(0, 204, 204, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+            min-width: 600px;
+            position: relative;
+        }
+
+        .score-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-label {
+            color: #00aaaa;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px rgba(0, 204, 204, 0.5);
+            opacity: 0.8;
+        }
+
+        .score-value {
+            color: #00cccc;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow:
+                0 0 10px rgba(0, 204, 204, 0.6),
+                0 0 20px rgba(0, 204, 204, 0.3);
+            animation: scorePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scorePulse {
+
+            0%,
+            100% {
+                text-shadow:
+                    0 0 10px rgba(0, 204, 204, 0.6),
+                    0 0 20px rgba(0, 204, 204, 0.3);
+            }
+
+            50% {
+                text-shadow:
+                    0 0 15px rgba(0, 204, 204, 0.8),
+                    0 0 30px rgba(0, 204, 204, 0.4);
+            }
+        }
+
+        #game-container {
+            box-shadow:
+                0 0 30px rgba(0, 204, 204, 0.4),
+                inset 0 0 30px rgba(0, 204, 204, 0.05);
+            border: 3px solid #00cccc;
+            border-radius: 3px;
+            position: relative;
+            background: #000000;
+        }
+
+        #game-title {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: #00cccc;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow:
+                0 0 10px rgba(0, 204, 204, 0.6),
+                0 0 20px rgba(0, 204, 204, 0.3);
+            z-index: 100;
+        }
+
+        #nird-easter-egg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #001a1a 0%, #003333 100%);
+            border: 2px solid #00cccc;
+            color: #00cccc;
+            padding: 15px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            border-radius: 5px;
+            box-shadow:
+                0 0 25px rgba(0, 204, 204, 0.4),
+                inset 0 0 15px rgba(0, 204, 204, 0.08);
+            text-shadow: 0 0 5px rgba(0, 204, 204, 0.5);
+            max-width: 300px;
+            z-index: 100;
+            animation: slideInRight 0.5s ease, nirdGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes nirdGlow {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 0 25px rgba(0, 204, 204, 0.4),
+                    inset 0 0 15px rgba(0, 204, 204, 0.08);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 35px rgba(0, 204, 204, 0.6),
+                    inset 0 0 20px rgba(0, 204, 204, 0.12);
+            }
+        }
+
+        #nird-easter-egg .nird-avatar-small {
+            display: inline-block;
+            font-size: 10px;
+            line-height: 1.1;
+            margin-right: 10px;
+            vertical-align: middle;
+            color: #00dddd;
+            text-shadow: 0 0 8px rgba(0, 221, 221, 0.6);
+        }
+
+        #nird-easter-egg strong {
+            color: #00ffff;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+        }
+
+        #nird-easter-egg .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #00cccc;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            line-height: 1;
+            opacity: 0.6;
+            transition: all 0.3s;
+            text-shadow: 0 0 5px rgba(0, 204, 204, 0.5);
+        }
+
+        #nird-easter-egg .close-btn:hover {
+            opacity: 1;
+            transform: scale(1.2);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-title">SNAKE v2.45</div>
+
+    <div id="nird-easter-egg" style="display: none;">
+        <button class="close-btn" onclick="closeNirdMessage()">×</button>
+        <pre class="nird-avatar-small">  /\_/\
+ (^-^)
+  >^<</pre>
+        <strong>🎮 NIRD :</strong> Tu as trouvé mon Easter Egg ! Le Snake post-apo ! Amuse-toi bien, humain ! ░▓
+    </div>
+
+    <div id="game-wrapper">
+        <div id="score-panel">
+            <div class="score-item">
+                <div class="score-label">Score</div>
+                <div class="score-value" id="score-display">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Speed</div>
+                <div class="score-value" id="speed-display">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Difficulty</div>
+                <div class="score-value" id="difficulty-display" style="font-size: 20px;">NORMAL</div>
+            </div>
+        </div>
+        <div id="game-container"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser-ce/2.14.0/phaser.min.js"></script>
+
+    <script>
+        var snake, apple, squareSize, score, speed,
+            updateDelay, direction, new_direction,
+            addNew, cursors, scoreTextValue, speedTextValue,
+            textStyle_Key, textStyle_Value, difficulty, speedMultiplier;
+
+        var game = new Phaser.Game(600, 450, Phaser.AUTO, 'game-container');
+
+        // Show NIRD message after 1 second
+        setTimeout(function () {
+            var nirdMsg = document.getElementById('nird-easter-egg');
+            if (nirdMsg) {
+                nirdMsg.style.display = 'block';
+                setTimeout(function () {
+                    if (nirdMsg.style.display === 'block') {
+                        nirdMsg.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }, 1000);
+
+        function closeNirdMessage() {
+            document.getElementById('nird-easter-egg').style.display = 'none';
+        }
+    </script>
+
+    <script>
+        var Menu = {
+            preload: function () {
+                if (!difficulty) {
+                    difficulty = 'normal';
+                }
+            },
+            create: function () {
+                game.stage.backgroundColor = '#1a0f0a';
+
+                var bgGraphics = game.add.graphics(0, 0);
+                bgGraphics.lineStyle(1, 0x3d2817, 0.4);
+                for (var x = 0; x <= 600; x += 10) {
+                    bgGraphics.moveTo(x, 0);
+                    bgGraphics.lineTo(x, 450);
+                }
+                for (var y = 0; y <= 450; y += 10) {
+                    bgGraphics.moveTo(0, y);
+                    bgGraphics.lineTo(600, y);
+                }
+
+                for (var i = 0; i < 30; i++) {
+                    var rx = Math.random() * 600;
+                    var ry = Math.random() * 450;
+                    var rustSpot = game.add.graphics(rx, ry);
+                    rustSpot.beginFill(0x4a2511, Math.random() * 0.2);
+                    rustSpot.drawCircle(0, 0, Math.random() * 20 + 10);
+                    rustSpot.endFill();
+                }
+
+                var border = game.add.graphics(0, 0);
+                border.lineStyle(6, 0x654321, 1);
+                border.drawRect(30, 30, 540, 390);
+
+                this.drawPixelSnakeTitle(100, 60);
+                this.drawPixelSnakeIcon(200, 180);
+                this.drawPixelApple(350, 200);
+
+                game.add.text(300, 250, "SELECT DIFFICULTY", {
+                    font: "bold 16px 'Courier New', monospace",
+                    fill: "#a0826d",
+                    align: "center"
+                }).anchor.setTo(0.5);
+
+                this.createDifficultyButton(80, 280, "EASY", 'easy', 0x8b6914);
+                this.createDifficultyButton(190, 280, "NORMAL", 'normal', 0xb8860b);
+                this.createDifficultyButton(310, 280, "HARD", 'hard', 0xd2691e);
+                this.createDifficultyButton(420, 280, "EXTREME", 'extreme', 0x8b4513);
+
+                game.add.text(300, 330, "USE ARROW KEYS TO CONTROL", {
+                    font: "bold 14px 'Courier New', monospace",
+                    fill: "#6b5744",
+                    align: "center"
+                }).anchor.setTo(0.5);
+
+                var buttonBg = game.add.graphics(200, 360);
+                buttonBg.beginFill(0x8b4513, 1);
+                buttonBg.drawRect(0, 0, 200, 50);
+                buttonBg.endFill();
+                buttonBg.lineStyle(4, 0x654321, 1);
+                buttonBg.drawRect(0, 0, 200, 50);
+                buttonBg.inputEnabled = true;
+                buttonBg.events.onInputDown.add(this.startGame, this);
+
+                buttonBg.events.onInputOver.add(function () {
+                    buttonBg.clear();
+                    buttonBg.beginFill(0xa0522d, 0.9);
+                    buttonBg.drawRect(0, 0, 200, 50);
+                    buttonBg.endFill();
+                    buttonBg.lineStyle(4, 0xd2691e, 1);
+                    buttonBg.drawRect(0, 0, 200, 50);
+                }, this);
+
+                buttonBg.events.onInputOut.add(function () {
+                    buttonBg.clear();
+                    buttonBg.beginFill(0x8b4513, 1);
+                    buttonBg.drawRect(0, 0, 200, 50);
+                    buttonBg.endFill();
+                    buttonBg.lineStyle(4, 0x654321, 1);
+                    buttonBg.drawRect(0, 0, 200, 50);
+                }, this);
+
+                var startText = game.add.text(300, 385, "START", {
+                    font: "bold 24px 'Courier New', monospace",
+                    fill: "#1a0f0a",
+                    align: "center"
+                });
+                startText.anchor.setTo(0.5);
+
+                var blinkText = game.add.text(300, 420, "CLICK START TO PLAY", {
+                    font: "bold 12px 'Courier New', monospace",
+                    fill: "#d4a574",
+                    align: "center"
+                });
+                blinkText.anchor.setTo(0.5);
+
+                game.time.events.loop(500, function () {
+                    blinkText.visible = !blinkText.visible;
+                }, this);
+            },
+
+            drawPixelSnakeTitle: function (x, y) {
+                var pixelSize = 8;
+                var letters = {
+                    'S': [
+                        [0, 1, 1, 1, 1],
+                        [1, 0, 0, 0, 0],
+                        [1, 0, 0, 0, 0],
+                        [0, 1, 1, 1, 0],
+                        [0, 0, 0, 0, 1],
+                        [0, 0, 0, 0, 1],
+                        [1, 1, 1, 1, 0]
+                    ],
+                    'N': [
+                        [1, 0, 0, 0, 1],
+                        [1, 1, 0, 0, 1],
+                        [1, 0, 1, 0, 1],
+                        [1, 0, 0, 1, 1],
+                        [1, 0, 0, 0, 1],
+                        [1, 0, 0, 0, 1],
+                        [1, 0, 0, 0, 1]
+                    ],
+                    'A': [
+                        [0, 1, 1, 1, 0],
+                        [1, 0, 0, 0, 1],
+                        [1, 0, 0, 0, 1],
+                        [1, 1, 1, 1, 1],
+                        [1, 0, 0, 0, 1],
+                        [1, 0, 0, 0, 1],
+                        [1, 0, 0, 0, 1]
+                    ],
+                    'K': [
+                        [1, 0, 0, 0, 1],
+                        [1, 0, 0, 1, 0],
+                        [1, 0, 1, 0, 0],
+                        [1, 1, 0, 0, 0],
+                        [1, 0, 1, 0, 0],
+                        [1, 0, 0, 1, 0],
+                        [1, 0, 0, 0, 1]
+                    ],
+                    'E': [
+                        [1, 1, 1, 1, 1],
+                        [1, 0, 0, 0, 0],
+                        [1, 0, 0, 0, 0],
+                        [1, 1, 1, 1, 0],
+                        [1, 0, 0, 0, 0],
+                        [1, 0, 0, 0, 0],
+                        [1, 1, 1, 1, 1]
+                    ]
+                };
+
+                var word = "SNAKE";
+                var currentX = x;
+                var spacing = 10;
+
+                for (var i = 0; i < word.length; i++) {
+                    var letter = letters[word[i]];
+                    for (var row = 0; row < letter.length; row++) {
+                        for (var col = 0; col < letter[row].length; col++) {
+                            if (letter[row][col] === 1) {
+                                var pixel = game.add.graphics(currentX + col * pixelSize, y + row * pixelSize);
+                                var rustColor = (Math.random() > 0.5) ? 0x8b4513 : 0xa0522d;
+                                pixel.beginFill(rustColor);
+                                pixel.drawRect(0, 0, pixelSize, pixelSize);
+                                pixel.endFill();
+                                pixel.lineStyle(1, 0x4a2511, 0.8);
+                                pixel.drawRect(0, 0, pixelSize, pixelSize);
+                            }
+                        }
+                    }
+                    currentX += (letter[0].length * pixelSize) + spacing;
+                }
+            },
+
+            drawPixelSnakeIcon: function (x, y) {
+                var pixelSize = 10;
+                var segments = [
+                    { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+                    { x: 3, y: 1 }, { x: 3, y: 2 }, { x: 2, y: 2 }, { x: 1, y: 2 },
+                    { x: 1, y: 3 }, { x: 1, y: 4 }
+                ];
+
+                segments.forEach(function (seg, index) {
+                    var segment = game.add.graphics(x + seg.x * pixelSize, y + seg.y * pixelSize);
+                    segment.beginFill(0x00ff00);
+                    segment.drawRect(0, 0, pixelSize, pixelSize);
+                    segment.endFill();
+                    segment.lineStyle(2, 0x00aa00, 1);
+                    segment.drawRect(0, 0, pixelSize, pixelSize);
+
+                    if (index === 0) {
+                        var eye1 = game.add.graphics(x + seg.x * pixelSize + 2, y + seg.y * pixelSize + 2);
+                        eye1.beginFill(0x000000);
+                        eye1.drawRect(0, 0, 2, 2);
+                        eye1.endFill();
+
+                        var eye2 = game.add.graphics(x + seg.x * pixelSize + 6, y + seg.y * pixelSize + 2);
+                        eye2.beginFill(0x000000);
+                        eye2.drawRect(0, 0, 2, 2);
+                        eye2.endFill();
+                    }
+                });
+            },
+
+            drawPixelApple: function (x, y) {
+                var pixelSize = 10;
+                var apple = [
+                    [0, 0, 1, 0, 0],
+                    [0, 1, 0, 1, 0],
+                    [1, 1, 1, 1, 1],
+                    [1, 1, 1, 1, 1],
+                    [0, 1, 1, 1, 0]
+                ];
+
+                for (var row = 0; row < apple.length; row++) {
+                    for (var col = 0; col < apple[row].length; col++) {
+                        if (apple[row][col] === 1) {
+                            var pixel = game.add.graphics(x + col * pixelSize, y + row * pixelSize);
+                            if (row === 0 || (row === 1 && col === 1)) {
+                                pixel.beginFill(0x00aa00);
+                            } else {
+                                pixel.beginFill(0xff0000);
+                            }
+                            pixel.drawRect(0, 0, pixelSize, pixelSize);
+                            pixel.endFill();
+                        }
+                    }
+                }
+            },
+
+            createDifficultyButton: function (x, y, label, difficultyLevel, color) {
+                var width = 100;
+                var height = 35;
+                var isSelected = (difficulty === difficultyLevel);
+
+                var btn = game.add.graphics(x, y);
+                if (isSelected) {
+                    btn.beginFill(color, 1);
+                    btn.drawRect(0, 0, width, height);
+                    btn.endFill();
+                    btn.lineStyle(3, 0xffffff, 1);
+                } else {
+                    btn.beginFill(color, 0.3);
+                    btn.drawRect(0, 0, width, height);
+                    btn.endFill();
+                    btn.lineStyle(2, color, 1);
+                }
+                btn.drawRect(0, 0, width, height);
+                btn.inputEnabled = true;
+
+                var btnText = game.add.text(x + width / 2, y + height / 2, label, {
+                    font: "bold " + (label.length > 6 ? "10" : "12") + "px 'Courier New', monospace",
+                    fill: isSelected ? "#000" : "#fff",
+                    align: "center"
+                });
+                btnText.anchor.setTo(0.5);
+
+                btn.events.onInputDown.add(function () {
+                    difficulty = difficultyLevel;
+                    this.state.start('Menu');
+                }, this);
+
+                btn.events.onInputOver.add(function () {
+                    btn.clear();
+                    btn.beginFill(color, 0.8);
+                    btn.drawRect(0, 0, width, height);
+                    btn.endFill();
+                    btn.lineStyle(3, 0xffffff, 1);
+                    btn.drawRect(0, 0, width, height);
+                }, this);
+
+                btn.events.onInputOut.add(function () {
+                    btn.clear();
+                    if (difficulty === difficultyLevel) {
+                        btn.beginFill(color, 1);
+                        btn.drawRect(0, 0, width, height);
+                        btn.endFill();
+                        btn.lineStyle(3, 0xffffff, 1);
+                    } else {
+                        btn.beginFill(color, 0.3);
+                        btn.drawRect(0, 0, width, height);
+                        btn.endFill();
+                        btn.lineStyle(2, color, 1);
+                    }
+                    btn.drawRect(0, 0, width, height);
+                }, this);
+            },
+
+            startGame: function () {
+                this.state.start('Game');
+            }
+        };
+    </script>
+
+    <script>
+        var Game = {
+            preload: function () { },
+            create: function () {
+                difficulty = difficulty || 'normal';
+
+                if (difficulty === 'easy') {
+                    speedMultiplier = 0.7;
+                } else if (difficulty === 'normal') {
+                    speedMultiplier = 1;
+                } else if (difficulty === 'hard') {
+                    speedMultiplier = 1.5;
+                } else if (difficulty === 'extreme') {
+                    speedMultiplier = 2;
+                }
+
+                snake = [];
+                apple = {};
+                squareSize = 10;
+                score = 0;
+                speed = 0;
+                updateDelay = 0;
+                direction = 'right';
+                new_direction = null;
+                addNew = false;
+
+                cursors = game.input.keyboard.createCursorKeys();
+                game.stage.backgroundColor = '#0a0a0a';
+
+                var graphics = game.add.graphics(0, 0);
+                graphics.lineStyle(1, 0x003333, 0.5);
+                for (var x = 0; x <= 600; x += squareSize) {
+                    graphics.moveTo(x, 0);
+                    graphics.lineTo(x, 450);
+                }
+                for (var y = 0; y <= 450; y += squareSize) {
+                    graphics.moveTo(0, y);
+                    graphics.lineTo(600, y);
+                }
+
+                for (var i = 0; i < 10; i++) {
+                    snake[i] = game.add.graphics(150 + i * squareSize, 150);
+                    var segmentColor = i === 9 ? 0x00ffcc : 0x00cccc;
+                    snake[i].beginFill(segmentColor, 0.9);
+                    snake[i].drawRect(0, 0, squareSize, squareSize);
+                    snake[i].endFill();
+                    snake[i].lineStyle(1, 0x009999, 0.8);
+                    snake[i].drawRect(0, 0, squareSize, squareSize);
+                }
+
+                this.generateApple();
+
+                document.getElementById('score-display').textContent = score;
+                document.getElementById('speed-display').textContent = speed;
+                document.getElementById('difficulty-display').textContent = difficulty.toUpperCase();
+
+                var diffColor = '#ffff00';
+                if (difficulty === 'easy') diffColor = '#00ff00';
+                else if (difficulty === 'hard') diffColor = '#ff9900';
+                else if (difficulty === 'extreme') diffColor = '#ff0000';
+                document.getElementById('difficulty-display').style.color = diffColor;
+            },
+
+            update: function () {
+                if (cursors.right.isDown && direction != 'left') {
+                    new_direction = 'right';
+                } else if (cursors.left.isDown && direction != 'right') {
+                    new_direction = 'left';
+                } else if (cursors.up.isDown && direction != 'down') {
+                    new_direction = 'up';
+                } else if (cursors.down.isDown && direction != 'up') {
+                    new_direction = 'down';
+                }
+
+                speed = Math.min(10, Math.floor(score / 5 * speedMultiplier));
+                document.getElementById('speed-display').textContent = speed;
+
+                updateDelay++;
+                var updateInterval = Math.max(1, Math.floor((10 - speed) / speedMultiplier));
+
+                if (updateDelay % updateInterval == 0) {
+                    var firstCell = snake[snake.length - 1],
+                        lastCell = snake.shift(),
+                        oldLastCellx = lastCell.x,
+                        oldLastCelly = lastCell.y;
+
+                    if (new_direction) {
+                        direction = new_direction;
+                        new_direction = null;
+                    }
+
+                    if (direction == 'right') {
+                        lastCell.x = firstCell.x + squareSize;
+                        lastCell.y = firstCell.y;
+                    } else if (direction == 'left') {
+                        lastCell.x = firstCell.x - squareSize;
+                        lastCell.y = firstCell.y;
+                    } else if (direction == 'up') {
+                        lastCell.x = firstCell.x;
+                        lastCell.y = firstCell.y - squareSize;
+                    } else if (direction == 'down') {
+                        lastCell.x = firstCell.x;
+                        lastCell.y = firstCell.y + squareSize;
+                    }
+
+                    if (addNew) {
+                        var newSegment = game.add.graphics(oldLastCellx, oldLastCelly);
+                        newSegment.beginFill(0x00cccc, 0.9);
+                        newSegment.drawRect(0, 0, squareSize, squareSize);
+                        newSegment.endFill();
+                        newSegment.lineStyle(1, 0x009999, 0.8);
+                        newSegment.drawRect(0, 0, squareSize, squareSize);
+                        snake.unshift(newSegment);
+                        addNew = false;
+                    }
+
+                    this.appleCollision();
+                    this.selfCollision(lastCell);
+                    this.wallCollision(lastCell);
+
+                    snake.push(lastCell);
+                    firstCell = lastCell;
+                }
+            },
+
+            appleCollision: function () {
+                for (var i = 0; i < snake.length; i++) {
+                    if (snake[i].x == apple.x && snake[i].y == apple.y) {
+                        addNew = true;
+                        apple.destroy();
+                        this.generateApple();
+                        score++;
+                        document.getElementById('score-display').textContent = score;
+                    }
+                }
+            },
+
+            selfCollision: function (head) {
+                for (var i = 0; i < snake.length - 1; i++) {
+                    if (head.x == snake[i].x && head.y == snake[i].y) {
+                        game.state.start('Game_Over');
+                    }
+                }
+            },
+
+            wallCollision: function (head) {
+                if (head.x >= 600 || head.x < 0 || head.y >= 450 || head.y < 0) {
+                    game.state.start('Game_Over');
+                }
+            },
+
+            generateApple: function () {
+                var randomX = (Math.floor(Math.random() * 57) + 1) * squareSize,
+                    randomY = (Math.floor(Math.random() * 42) + 1) * squareSize;
+
+                apple = game.add.graphics(randomX, randomY);
+                apple.beginFill(0xff0066, 0.9);
+                apple.drawRect(0, 0, squareSize, squareSize);
+                apple.endFill();
+                apple.lineStyle(2, 0xff0000, 1);
+                apple.drawRect(0, 0, squareSize, squareSize);
+            }
+        };
+    </script>
+
+    <script>
+        var Game_Over = {
+            preload: function () { },
+            create: function () {
+                game.stage.backgroundColor = '#1a0f0a';
+
+                var border = game.add.graphics(0, 0);
+                border.lineStyle(4, 0x8b4513, 1);
+                border.drawRect(20, 20, 560, 410);
+
+                var bgGraphics = game.add.graphics(0, 0);
+                bgGraphics.lineStyle(1, 0x3d2817, 0.3);
+                for (var x = 0; x <= 600; x += 20) {
+                    bgGraphics.moveTo(x, 0);
+                    bgGraphics.lineTo(x, 450);
+                }
+                for (var y = 0; y <= 450; y += 20) {
+                    bgGraphics.moveTo(0, y);
+                    bgGraphics.lineTo(600, y);
+                }
+
+                game.add.text(300, 100, "GAME OVER", {
+                    font: "bold 48px 'Courier New', monospace",
+                    fill: "#ff0000",
+                    align: "center"
+                }).anchor.setTo(0.5);
+
+                game.add.text(300, 200, "SCORE: " + score, {
+                    font: "bold 32px 'Courier New', monospace",
+                    fill: "#00cccc",
+                    align: "center"
+                }).anchor.setTo(0.5);
+
+                game.add.text(300, 250, "DIFFICULTY: " + (difficulty || 'NORMAL').toUpperCase(), {
+                    font: "bold 20px 'Courier New', monospace",
+                    fill: this.getDifficultyColor(difficulty),
+                    align: "center"
+                }).anchor.setTo(0.5);
+
+                var buttonBg = game.add.graphics(200, 300);
+                buttonBg.beginFill(0x00cccc, 0.3);
+                buttonBg.drawRect(0, 0, 200, 50);
+                buttonBg.endFill();
+                buttonBg.lineStyle(3, 0x00cccc, 1);
+                buttonBg.drawRect(0, 0, 200, 50);
+                buttonBg.inputEnabled = true;
+                buttonBg.events.onInputDown.add(this.startGame, this);
+
+                game.add.text(300, 325, "RETRY", {
+                    font: "bold 24px 'Courier New', monospace",
+                    fill: "#00cccc",
+                    align: "center"
+                }).anchor.setTo(0.5);
+
+                var menuBg = game.add.graphics(200, 370);
+                menuBg.beginFill(0x8b4513, 0.3);
+                menuBg.drawRect(0, 0, 200, 50);
+                menuBg.endFill();
+                menuBg.lineStyle(3, 0x8b4513, 1);
+                menuBg.drawRect(0, 0, 200, 50);
+                menuBg.inputEnabled = true;
+                menuBg.events.onInputDown.add(function () {
+                    game.state.start('Menu');
+                }, this);
+
+                game.add.text(300, 395, "MENU", {
+                    font: "bold 24px 'Courier New', monospace",
+                    fill: "#8b4513",
+                    align: "center"
+                }).anchor.setTo(0.5);
+            },
+
+            getDifficultyColor: function (diff) {
+                if (diff === 'easy') return '#00ff00';
+                if (diff === 'hard') return '#ff9900';
+                if (diff === 'extreme') return '#ff0000';
+                return '#ffff00';
+            },
+
+            startGame: function () {
+                this.state.start('Game');
+            }
+        };
+    </script>
+
+    <script>
+        game.state.add('Menu', Menu);
+        game.state.add('Game', Game);
+        game.state.add('Game_Over', Game_Over);
+        game.state.start('Menu');
+    </script>
+</body>
+
+</html>

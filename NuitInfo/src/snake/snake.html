@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - NIRD Easter Egg</title>
+    <link rel="stylesheet" href="./snake.css">
+</head>
+<body>
+    <!-- Titre cyber -->
+    <div id="game-title">SNAKE v2.45</div>
+    
+    <!-- Bouton retour au menu -->
+    <a href="./ChatBot.html" id="back-to-menu">
+        Menu
+    </a>
+    
+    <!-- Message NIRD Easter Egg (affiché au lancement) -->
+    <div id="nird-easter-egg" style="display: none;">
+        <button class="close-btn" onclick="closeNirdMessage()">×</button>
+        <pre class="nird-avatar-small">  /\_/\
+ (^-^)
+  >^<</pre>
+        <strong>🎮 NIRD :</strong> Tu as trouvé mon Easter Egg ! Le Snake post-apo ! Amuse-toi bien, humain ! ░▓
+    </div>
+    
+    <div id="game-wrapper">
+        <div id="score-panel">
+            <div class="score-item">
+                <div class="score-label">Score</div>
+                <div class="score-value" id="score-display">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Speed</div>
+                <div class="score-value" id="speed-display">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Difficulty</div>
+                <div class="score-value" id="difficulty-display" style="font-size: 20px;">NORMAL</div>
+            </div>
+        </div>
+        <div id="game-container"></div>
+    </div>
+    
+    <!-- Load Phaser library from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser-ce/2.14.0/phaser.min.js"></script>
+    
+    <!-- Load game states -->
+    <script src="./asset/js/menu.js"></script>
+    <script src="./asset/js/game.js"></script>
+    <script src="./asset/js/game_over.js"></script>
+    
+    <!-- Initialize game and start -->
+    <script>
+        var game = new Phaser.Game(600, 450, Phaser.AUTO, 'game-container');
+        
+        // Afficher le message NIRD après 1 seconde
+        setTimeout(function() {
+            var nirdMsg = document.getElementById('nird-easter-egg');
+            if(nirdMsg) {
+                nirdMsg.style.display = 'block';
+                // Auto-fermer après 5 secondes
+                setTimeout(function() {
+                    if(nirdMsg.style.display === 'block') {
+                        nirdMsg.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }, 1000);
+        
+        function closeNirdMessage() {
+            document.getElementById('nird-easter-egg').style.display = 'none';
+        }
+    </script>
+    
+    <script src="./asset/js/main.js"></script>
+</body>
+</html>
