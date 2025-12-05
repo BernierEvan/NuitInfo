@@ -75,7 +75,7 @@ export const VoiceProvider = ({ children }) => {
         console.log(`Subtitle set to: ${config.text}`);
 
         // Create and play audio
-        const audioPath = `/src/assets/voices/${type === 'ai' ? 'ia' : 'character'}/${config.file}`;
+        const audioPath = `/voices/${type === 'ai' ? 'ia' : 'character'}/${config.file}`;
 
         return new Promise((resolve) => {
             try {
@@ -210,7 +210,7 @@ export const useVoiceSystem = () => {
             setIsAI(isAIVoice);
             setCurrentSubtitle(config.text);
 
-            const audioPath = `/src/assets/voices/${type === 'ai' ? 'ia' : 'character'}/${config.file}`;
+            const audioPath = `/voices/${type === 'ai' ? 'ia' : 'character'}/${config.file}`;
 
             return new Promise((resolve) => {
                 try {
