@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GameProvider } from './context/GameContext';
+import { VoiceProvider } from './components/VoiceSubtitleSystem';
 import CinematicOverlay from './components/CinematicOverlay';
 import IntroMonologue from './components/IntroMonologue';
 import BuggedSequence from './components/BuggedSequence';
@@ -30,32 +31,34 @@ function App() {
 
   return (
     <GameProvider>
-      <Router>
-        {showIntro ? (
-          // ONLY show intro - pitch black screen with blue text
-          <IntroMonologue onComplete={handleIntroComplete} />
-        ) : showBuggedSequence ? (
-          <BuggedSequence onComplete={handleBuggedSequenceComplete} />
-        ) : (
-          // ONLY show main app after Enter is pressed
+      <VoiceProvider>
+        <Router>
+          {showIntro ? (
+            // ONLY show intro - pitch black screen with blue text
+            <IntroMonologue onComplete={handleIntroComplete} />
+          ) : showBuggedSequence ? (
+            <BuggedSequence onComplete={handleBuggedSequenceComplete} />
+          ) : (
+            // ONLY show main app after Enter is pressed
 
-          <div className="App">
+            <div className="App">
 
-            {/* Scanline effect */}
-            <div id="appbackground" className="background-Intro"></div>
+              {/* Scanline effect */}
+              <div id="appbackground" className="background-Intro"></div>
 
-            {/* Routes */}
-            <Routes>
-              <Route path="/" element={<Lobby />} />
-              <Route path="/records" element={<Records />} />
-              <Route path="/bunker-snake" element={<SnakeGame />} />
-              <Route path="/assessment" element={<SportQCM />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-          </div>
-        )}
-      </Router>
-    </GameProvider >
+              {/* Routes */}
+              <Routes>
+                <Route path="/" element={<Lobby />} />
+                <Route path="/records" element={<Records />} />
+                <Route path="/bunker-snake" element={<SnakeGame />} />
+                <Route path="/assessment" element={<SportQCM />} />
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
+            </div>
+          )}
+        </Router>
+      </VoiceProvider>
+    </GameProvider>
   );
 }
 

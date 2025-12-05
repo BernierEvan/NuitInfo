@@ -1,41 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const BuggedSequence = ({ onComplete }) => {
-    const [isTurningOff, setIsTurningOff] = useState(false);
+    const [textPositions, setTextPositions] = useState([]);
+    const [visibleCount, setVisibleCount] = useState(0);
+    const intervalRef = useRef(null);
+    const spawnRef = useRef(null);
+
+    // Glitch text fragments
+    const glitchTexts = [
+        'NO SIGNAL', 'ERROR', 'CORRUPTED', '???', 'HELP',
+        'SYSTEM_FAILURE', '404', 'FATAL', 'BREACH', 'OVERRIDE',
+        '!@#$%', 'GLITCH', 'VOID', 'NULL', 'UNDEFINED',
+        'NIRD', 'RESISTANCE', 'ACCESS', 'DENIED', 'CRASH'
+    ];
+
+    const TOTAL_TEXTS = 100;
 
     useEffect(() => {
-        // Run the "bugging" phase for 3 seconds, then turn off
+        // Generate initial positions for all text fragments
+        const generatePositions = () => {
+            const positions = [];
+            for (let i = 0; i < TOTAL_TEXTS; i++) {
+                positions.push({
+                    id: i,
+                    text: glitchTexts[Math.floor(Math.random() * glitchTexts.length)],
+                    x: Math.random() * 95,
+                    y: Math.random() * 95,
+                    size: 14 + Math.random() * 36
+                });
+            }
+            return positions;
+        };
+
+        setTextPositions(generatePositions());
+
+        // Rapidly spawn text one by one (every 20ms for faster buildup)
+        spawnRef.current = setInterval(() => {
+            setVisibleCount(prev => {
+                if (prev >= TOTAL_TEXTS) {
+                    clearInterval(spawnRef.current);
+                    return prev;
+                }
+                return prev + 1;
+            });
+        }, 20);
+
+        // Rapidly update positions every 80ms for erratic movement
+        intervalRef.current = setInterval(() => {
+            setTextPositions(prev => prev.map(item => ({
+                ...item,
+                text: Math.random() > 0.7 ? glitchTexts[Math.floor(Math.random() * glitchTexts.length)] : item.text,
+                x: Math.random() * 90,
+                y: Math.random() * 90,
+                size: 20 + Math.random() * 40
+            })));
+        }, 80);
+
+        // Run for 5 seconds, then complete immediately
         const timeout = setTimeout(() => {
-            setIsTurningOff(true);
+            clearInterval(intervalRef.current);
+            clearInterval(spawnRef.current);
+            onComplete();
+        }, 5000);
 
-            // Wait for animation to finish then complete
-            setTimeout(() => {
-                onComplete();
-            }, 800);
-        }, 3000);
-
-        return () => clearTimeout(timeout);
+        return () => {
+            clearTimeout(timeout);
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            if (spawnRef.current) clearInterval(spawnRef.current);
+        };
     }, [onComplete]);
-
-    // Generate many glitch bars
-    const glitchBars = [];
-    for (let i = 0; i < 30; i++) {
-        const colors = [
-            'rgba(0,255,255,0.4)',   // cyan
-            'rgba(255,0,0,0.5)',      // red
-            'rgba(0,255,0,0.4)',      // green
-            'rgba(255,0,255,0.4)',    // magenta
-            'rgba(255,255,0,0.4)',    // yellow
-            'rgba(255,255,255,0.3)'   // white
-        ];
-        glitchBars.push({
-            top: `${(i * 3.5)}%`,
-            height: `${3 + Math.random() * 10}px`,
-            color: colors[i % colors.length],
-            duration: 0.08 + Math.random() * 0.15,
-            delay: i * 0.015
-        });
-    }
 
     return (
         <div
@@ -47,10 +80,7 @@ const BuggedSequence = ({ onComplete }) => {
                 right: 0,
                 bottom: 0,
                 width: '100vw',
-                height: '100vh',
-                transform: isTurningOff ? 'scaleY(0)' : 'scaleY(1)',
-                transition: isTurningOff ? 'transform 0.6s ease-in' : 'none',
-                transformOrigin: 'center center'
+                height: '100vh'
             }}
         >
             {/* Animated Static Noise Background */}
@@ -58,45 +88,42 @@ const BuggedSequence = ({ onComplete }) => {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                     background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-                    opacity: 0.7,
+                    opacity: 0.5,
                     animation: 'static-noise 0.1s infinite steps(5)'
                 }}
             ></div>
 
-            {/* Heavy scanlines */}
+            {/* Scanlines */}
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                    background: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.5) 1px, rgba(0,0,0,0.5) 2px)',
+                    background: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.3) 1px, rgba(0,0,0,0.3) 2px)',
                     animation: 'scanline-move 0.1s linear infinite'
                 }}
             ></div>
 
-            {/* MANY horizontal glitch bars covering entire screen */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {glitchBars.map((bar, i) => (
-                    <div
-                        key={i}
-                        className="absolute w-full"
-                        style={{
-                            top: bar.top,
-                            height: bar.height,
-                            backgroundColor: bar.color,
-                            animation: `glitch-bar ${bar.duration}s infinite`,
-                            animationDelay: `${bar.delay}s`
-                        }}
-                    ></div>
-                ))}
-            </div>
-
-            {/* RGB Shift overlay */}
-            <div
-                className="absolute inset-0 pointer-events-none mix-blend-screen"
-                style={{
-                    background: 'linear-gradient(90deg, rgba(255,0,0,0.15) 0%, transparent 33%, rgba(0,255,0,0.15) 66%, rgba(0,0,255,0.15) 100%)',
-                    animation: 'rgb-shift 0.15s infinite'
-                }}
-            ></div>
+            {/* Erratic text fragments - staggered appearance, straight lines */}
+            {textPositions.slice(0, visibleCount).map((item) => (
+                <div
+                    key={item.id}
+                    className="absolute font-bold font-mono pointer-events-none"
+                    style={{
+                        left: `${item.x}%`,
+                        top: `${item.y}%`,
+                        fontSize: `${item.size}px`,
+                        background: 'linear-gradient(90deg, #0066ff, #ff0000)',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        color: 'transparent',
+                        textShadow: '0 0 10px rgba(0,102,255,0.5), 0 0 20px rgba(255,0,0,0.5)',
+                        filter: 'drop-shadow(0 0 5px rgba(0,102,255,0.8)) drop-shadow(0 0 10px rgba(255,0,0,0.8))',
+                        opacity: 0.95,
+                        whiteSpace: 'nowrap'
+                    }}
+                >
+                    {item.text}
+                </div>
+            ))}
 
             {/* Flickering white flash */}
             <div
@@ -106,51 +133,11 @@ const BuggedSequence = ({ onComplete }) => {
                 }}
             ></div>
 
-            {/* Center content - NO SIGNAL */}
-            <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                    <h1
-                        className="text-7xl md:text-9xl font-bold text-white tracking-widest"
-                        style={{
-                            textShadow: '6px 0 #ff0000, -6px 0 #00ffff, 0 0 30px rgba(255,255,255,0.6)',
-                            animation: 'text-glitch 0.08s infinite',
-                            opacity: 0.9
-                        }}
-                    >
-                        NO SIGNAL
-                    </h1>
-                    <div
-                        className="mt-8 text-cyan-400 font-mono text-2xl"
-                        style={{
-                            animation: 'blink 0.4s infinite',
-                            textShadow: '0 0 10px rgba(0,255,255,0.8)'
-                        }}
-                    >
-                        ░▓█ SIGNAL_LOST █▓░
-                    </div>
-                </div>
-            </div>
-
-            {/* VHS tracking lines - multiple */}
-            <div
-                className="absolute left-0 right-0 h-20 bg-gradient-to-b from-transparent via-white/20 to-transparent pointer-events-none"
-                style={{ animation: 'vhs-tracking 1.5s linear infinite' }}
-            ></div>
-            <div
-                className="absolute left-0 right-0 h-12 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent pointer-events-none"
-                style={{ animation: 'vhs-tracking 2s linear infinite', animationDelay: '0.5s' }}
-            ></div>
-
             {/* Screen edge vignette */}
             <div
                 className="absolute inset-0 pointer-events-none"
-                style={{ boxShadow: 'inset 0 0 200px rgba(0,0,0,0.9)' }}
+                style={{ boxShadow: 'inset 0 0 200px rgba(0,0,0,0.8)' }}
             ></div>
-
-            {/* Turn off flash when closing */}
-            {isTurningOff && (
-                <div className="absolute inset-0 bg-white" style={{ opacity: 0.9, animation: 'flash-out 0.3s forwards' }}></div>
-            )}
 
             <style>{`
                 @keyframes static-noise {
@@ -166,54 +153,9 @@ const BuggedSequence = ({ onComplete }) => {
                     100% { transform: translateY(4px); }
                 }
 
-                @keyframes glitch-bar {
-                    0%, 100% { transform: translateX(0) scaleX(1); opacity: 0.4; }
-                    15% { transform: translateX(-200px) scaleX(2); opacity: 0.8; }
-                    30% { transform: translateX(150px) scaleX(0.3); opacity: 0.2; }
-                    45% { transform: translateX(-100px) scaleX(1.5); opacity: 0.6; }
-                    60% { transform: translateX(200px) scaleX(0.5); opacity: 0.3; }
-                    75% { transform: translateX(-50px) scaleX(1.8); opacity: 0.7; }
-                    90% { transform: translateX(100px) scaleX(0.8); opacity: 0.5; }
-                }
-
-                @keyframes rgb-shift {
-                    0%, 100% { transform: translateX(0); }
-                    25% { transform: translateX(15px); }
-                    50% { transform: translateX(-10px); }
-                    75% { transform: translateX(5px); }
-                }
-
                 @keyframes flicker {
                     0%, 9%, 11%, 19%, 21%, 69%, 71%, 100% { opacity: 0; }
-                    10%, 20%, 70% { opacity: 0.15; }
-                }
-
-                @keyframes text-glitch {
-                    0%, 100% { transform: translate(0) skewX(0); }
-                    10% { transform: translate(-5px, 3px) skewX(-5deg); }
-                    20% { transform: translate(5px, -3px) skewX(5deg); }
-                    30% { transform: translate(-3px, -3px) skewX(-3deg); }
-                    40% { transform: translate(3px, 3px) skewX(3deg); }
-                    50% { transform: translate(-4px, 2px) skewX(-2deg); }
-                    60% { transform: translate(4px, -2px) skewX(4deg); }
-                    70% { transform: translate(-2px, -4px) skewX(-4deg); }
-                    80% { transform: translate(2px, 4px) skewX(2deg); }
-                    90% { transform: translate(-3px, 1px) skewX(-1deg); }
-                }
-
-                @keyframes blink {
-                    0%, 49% { opacity: 1; }
-                    50%, 100% { opacity: 0.3; }
-                }
-
-                @keyframes vhs-tracking {
-                    0% { top: -15%; }
-                    100% { top: 115%; }
-                }
-
-                @keyframes flash-out {
-                    0% { opacity: 0.9; }
-                    100% { opacity: 0; }
+                    10%, 20%, 70% { opacity: 0.1; }
                 }
             `}</style>
         </div>

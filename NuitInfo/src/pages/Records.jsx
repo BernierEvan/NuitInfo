@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useVoiceSystem, PIONEER_VOICE_MAP } from '../components/VoiceSubtitleSystem';
 
 // Records data for pioneers
 const pioneersData = [
@@ -98,7 +99,11 @@ const pioneersData = [
 const Records = () => {
     const navigate = useNavigate();
     const [selectedPioneer, setSelectedPioneer] = useState(null);
+    const [showPodcast, setShowPodcast] = useState(false);
     const [glitchIn, setGlitchIn] = useState(true);
+
+    // Voice system
+    const { playVoice, SubtitleComponent } = useVoiceSystem();
 
     useEffect(() => {
         const timer = setTimeout(() => setGlitchIn(false), 1000);
@@ -108,6 +113,24 @@ const Records = () => {
     const handleBack = () => {
         setGlitchIn(true);
         setTimeout(() => navigate('/'), 500);
+    };
+
+    // Handle pioneer click - show details first, then play voice
+    const handlePioneerClick = (pioneer) => {
+        setSelectedPioneer(pioneer);
+
+        // Play voice after the detail view appears
+        setTimeout(() => {
+            const voiceKey = PIONEER_VOICE_MAP[pioneer.id];
+            if (voiceKey) {
+                playVoice('character', voiceKey);
+            }
+        }, 500);
+    };
+
+    // Handle podcast click
+    const handlePodcastClick = () => {
+        setShowPodcast(true);
     };
 
     return (
@@ -126,6 +149,9 @@ const Records = () => {
                     </div>
                 </div>
             )}
+
+            {/* Subtitle display for voice */}
+            <SubtitleComponent />
 
             {/* Scanlines */}
             <div className="scanlines fixed inset-0 pointer-events-none z-40"></div>
@@ -150,7 +176,7 @@ const Records = () => {
 
             {/* Main Content */}
             <div className="relative z-10 max-w-7xl mx-auto px-6 py-8 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
-                {!selectedPioneer ? (
+                {!selectedPioneer && !showPodcast ? (
                     <>
                         {/* Intro Text */}
                         <div className="text-center mb-8">
@@ -248,7 +274,7 @@ const Records = () => {
                             {pioneersData.map((pioneer, index) => (
                                 <button
                                     key={pioneer.id}
-                                    onClick={() => setSelectedPioneer(pioneer)}
+                                    onClick={() => handlePioneerClick(pioneer)}
                                     className="group relative text-left"
                                     style={{ animationDelay: `${index * 100}ms` }}
                                 >
@@ -269,7 +295,96 @@ const Records = () => {
                                 </button>
                             ))}
                         </div>
+
+                        {/* Section divider for podcast */}
+                        <div className="flex items-center gap-4 my-12">
+                            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-purple-500/50"></div>
+                            <span className="text-purple-400 font-mono text-sm">🎙️ LATEST PODCAST</span>
+                            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-purple-500/50"></div>
+                        </div>
+
+                        {/* Podcast Card */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                            <button
+                                onClick={handlePodcastClick}
+                                className="group relative text-left"
+                            >
+                                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur opacity-0 group-hover:opacity-30 transition duration-500"></div>
+                                <div className="relative p-6 rounded-xl border border-purple-500/30 bg-gradient-to-b from-purple-900/40 to-black hover:border-purple-400 transition-all duration-300">
+                                    <div className="flex items-start justify-between mb-4">
+                                        <span className="text-4xl">🎙️</span>
+                                        <span className="text-purple-500/60 font-mono text-xs bg-purple-500/10 px-2 py-1 rounded">NEW</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors mb-1">THE RESISTANCE PODCAST</h3>
+                                    <p className="text-purple-500/80 font-mono text-sm mb-3">Latest Transmission</p>
+                                    <p className="text-gray-400 text-sm line-clamp-2">Intercepted broadcast from pre-apocalypse archives. Essential viewing for all resistance members.</p>
+                                    <div className="mt-4 flex items-center gap-2 text-purple-400 font-mono text-xs group-hover:translate-x-2 transition-transform">
+                                        <span>WATCH_PODCAST</span>
+                                        <span>→</span>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
                     </>
+                ) : showPodcast ? (
+                    /* Podcast Detail View */
+                    <div className="max-w-4xl mx-auto animate-fade-in">
+                        <button onClick={() => setShowPodcast(false)} className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors font-mono mb-8">
+                            <span>←</span>
+                            <span>BACK_TO_RECORDS</span>
+                        </button>
+
+                        <div className="bg-gradient-to-b from-purple-900/40 to-black rounded-2xl border border-purple-500/30 overflow-hidden">
+                            <div className="p-8 border-b border-purple-500/20 bg-purple-500/5">
+                                <div className="flex items-center gap-6">
+                                    <div className="w-24 h-24 rounded-full bg-purple-500/20 border-2 border-purple-500 flex items-center justify-center text-5xl">🎙️</div>
+                                    <div>
+                                        <h2 className="text-4xl font-bold text-purple-400 mb-2">THE RESISTANCE PODCAST</h2>
+                                        <p className="text-purple-500/80 font-mono text-lg">Latest Transmission</p>
+                                        <p className="text-purple-500/50 font-mono text-sm mt-1">Pre-Apocalypse Archives</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="p-8 space-y-8">
+                                {/* Video Embed */}
+                                <div>
+                                    <h3 className="text-purple-400 font-mono text-sm mb-3 flex items-center gap-2">
+                                        <span className="text-purple-500">▌</span> BROADCAST
+                                    </h3>
+                                    <div className="aspect-video w-full rounded-lg overflow-hidden border border-purple-500/30 bg-black">
+                                        <iframe
+                                            className="w-full h-full"
+                                            src="https://www.youtube.com/embed/uDy-kSxHBVc"
+                                            title="The Resistance Podcast"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-purple-400 font-mono text-sm mb-3 flex items-center gap-2">
+                                        <span className="text-purple-500">▌</span> DESCRIPTION
+                                    </h3>
+                                    <p className="text-gray-300 text-lg leading-relaxed">
+                                        This intercepted transmission was recovered from the pre-apocalypse archives.
+                                        It contains vital information about technology history and the pioneers who shaped our digital world.
+                                        All resistance members are encouraged to study this material carefully.
+                                    </p>
+                                </div>
+
+                                <div className="flex items-center gap-4 pt-4 border-t border-purple-500/20">
+                                    <div className="flex items-center gap-2 text-green-400 font-mono text-sm">
+                                        <span className="animate-pulse">●</span>
+                                        ARCHIVED_IN_NIRD_DATABASE
+                                    </div>
+                                    <div className="text-purple-500/50 font-mono text-sm">BROADCAST_STATUS: ACTIVE</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 ) : (
                     /* Pioneer Detail View */
                     <div className="max-w-4xl mx-auto animate-fade-in">

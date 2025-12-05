@@ -365,7 +365,7 @@ const Chatbot = ({ onClose, onOpenSnake }) => {
 
         // Easter egg: "Are you Ada Lovelace?" opens Snake
         if (lowerText.includes('ada lovelace') && (lowerText.includes('are you') || lowerText.includes('es-tu') || lowerText.includes('es tu') || lowerText.includes('tu es'))) {
-            addMessage('bot', "🎮 Tu m'as démasquée ! Je suis en effet inspirée par Ada Lovelace, la première programmeuse de l'histoire ! Voici un petit jeu en son honneur...");
+            addMessage('bot', "🎮 Tu m'as démasquée ! Voici un petit jeu en son honneur...");
             changeMood('excited');
             setTimeout(() => {
                 if (onOpenSnake) {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GlitchWrapper from '../components/GlitchWrapper';
 import { womenInTechLore } from '../data/LoreData';
@@ -6,6 +6,7 @@ import LoreModal from '../components/LoreModal';
 import Chatbot from './Chatbot';
 import SnakeGameWrapper from '../components/SnakeGameWrapper';
 import adaIcon from '../assets/ada_lovelace_chatbot.jpg';
+import { useVoiceSystem } from '../components/VoiceSubtitleSystem';
 
 const Lobby = () => {
     const navigate = useNavigate();
@@ -13,6 +14,12 @@ const Lobby = () => {
     const [showChatbot, setShowChatbot] = useState(false);
     const [showSnake, setShowSnake] = useState(false);
     const [isGlitching, setIsGlitching] = useState(false);
+    const [introPlayed, setIntroPlayed] = useState(false);
+    const [iconBounce, setIconBounce] = useState(false);
+
+    // Voice system
+    const { playVoice, SubtitleComponent } = useVoiceSystem();
+    const introPlayedRef = useRef(false);
 
     const shards = useMemo(() => {
         return womenInTechLore.map(lore => {
@@ -27,6 +34,75 @@ const Lobby = () => {
         });
     }, []);
 
+    // Play intro sequence when entering lobby
+    useEffect(() => {
+        // Check sessionStorage - only play once per session
+        if (sessionStorage.getItem('lobbyIntroPlayed') === 'true') {
+            introPlayedRef.current = true;
+            setIntroPlayed(true);
+            return;
+        }
+
+        // Only play once per mount cycle
+        if (introPlayedRef.current) return;
+        introPlayedRef.current = true;
+
+        // Small delay before starting intro
+        const runIntro = async () => {
+            console.log('Starting intro sequence...');
+
+            try {
+                await playVoice('character', 'wtfWasThat');
+                await new Promise(r => setTimeout(r, 300));
+
+                await playVoice('character', 'nirdTheResistance');
+                await new Promise(r => setTimeout(r, 300));
+
+                await playVoice('character', 'wellGuess');
+                await new Promise(r => setTimeout(r, 1500));
+
+                // Make icon bounce
+                setIconBounce(true);
+
+                await playVoice('character', 'whoAreYou');
+                await new Promise(r => setTimeout(r, 300));
+
+                await playVoice('ai', 'imNird');
+                await new Promise(r => setTimeout(r, 300));
+
+                await playVoice('ai', 'dontHesitate');
+
+                // Mark as played in sessionStorage for this session
+                sessionStorage.setItem('lobbyIntroPlayed', 'true');
+                setIntroPlayed(true);
+                console.log('Intro sequence complete');
+            } catch (err) {
+                console.error('Intro sequence error:', err);
+            }
+        };
+
+        const timer = setTimeout(runIntro, 1000);
+        return () => {
+            clearTimeout(timer);
+            // Reset ref on cleanup so intro can play after StrictMode remount
+            introPlayedRef.current = false;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Handle chatbot icon click - play "What would you like to know?"
+    const handleChatbotClick = async () => {
+        await playVoice('ai', 'whatWouldYouLike');
+        setShowChatbot(true);
+    };
+
+    // Handle snake game open - AI says "You discovered my secret"
+    const handleOpenSnake = async () => {
+        setShowChatbot(false);
+        await playVoice('ai', 'discoveredSecret');
+        setShowSnake(true);
+    };
+
     // Glitchy transition to Records page
     const handleRecordsClick = () => {
         setIsGlitching(true);
@@ -37,6 +113,9 @@ const Lobby = () => {
 
     return (
         <div className="min-h-screen w-full flex flex-col items-center justify-center p-8 relative overflow-hidden bg-black">
+            {/* Subtitle display */}
+            <SubtitleComponent />
+
             {/* Glitch Transition Overlay */}
             {isGlitching && (
                 <div className="fixed inset-0 z-[9999] pointer-events-none">
@@ -115,7 +194,6 @@ const Lobby = () => {
                 {/* Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-4">
                     {/* Profile Card */}
-
                     <GlitchWrapper intensity="medium">
                         <div className="group relative">
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
@@ -126,7 +204,7 @@ const Lobby = () => {
                                 <div className="flex-1 p-6 flex flex-col justify-between">
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-cyan-400 text-3xl"></span>
+                                            <span className="text-cyan-400 text-3xl">👤</span>
                                             <span className="text-red-500 text-xs font-mono bg-red-500/10 border border-red-500/30 px-2 py-1 rounded">LOCKED</span>
                                         </div>
                                         <h2 className="text-3xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">PROFILE</h2>
@@ -141,8 +219,7 @@ const Lobby = () => {
                         </div>
                     </GlitchWrapper>
 
-
-
+                    {/* Records Card */}
                     <GlitchWrapper intensity="medium">
                         <div className="group relative">
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
@@ -153,7 +230,7 @@ const Lobby = () => {
                                 <div className="flex-1 p-6 flex flex-col justify-between">
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-amber-400 text-3xl"></span>
+                                            <span className="text-amber-400 text-3xl">📜</span>
                                             <span className="text-amber-400 text-xs font-mono bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded">ARCHIVES</span>
                                         </div>
                                         <h2 className="text-3xl font-bold text-white group-hover:text-amber-400 transition-colors duration-300">RECORDS</h2>
@@ -167,8 +244,8 @@ const Lobby = () => {
                             </button>
                         </div>
                     </GlitchWrapper>
-                    {/* Records Card - with glitchy transition */}
 
+                    {/* Assessment Card */}
                     <GlitchWrapper intensity="high">
                         <div className="group relative">
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
@@ -179,7 +256,7 @@ const Lobby = () => {
                                 <div className="flex-1 p-6 flex flex-col justify-between">
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-purple-400 text-3xl"></span>
+                                            <span className="text-purple-400 text-3xl">🎯</span>
                                             <span className="text-purple-400 text-xs font-mono bg-purple-500/10 border border-purple-500/30 px-2 py-1 rounded">REQUIRED</span>
                                         </div>
                                         <h2 className="text-3xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">ASSESSMENT</h2>
@@ -193,9 +270,6 @@ const Lobby = () => {
                             </button>
                         </div>
                     </GlitchWrapper>
-
-                    {/* Assessment Card */}
-
                 </div>
             </div>
 
@@ -211,10 +285,7 @@ const Lobby = () => {
             {showChatbot && (
                 <Chatbot
                     onClose={() => setShowChatbot(false)}
-                    onOpenSnake={() => {
-                        setShowChatbot(false);
-                        setShowSnake(true);
-                    }}
+                    onOpenSnake={handleOpenSnake}
                 />
             )}
 
@@ -231,14 +302,17 @@ const Lobby = () => {
                 style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: 9999 }}
                 className={`transition-opacity duration-300 ${showChatbot ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             >
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 animate-bounce z-50">
-                    <span className="text-[150px] text-red-500 font-bold drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">!</span>
-                </div>
+                {/* Bounce indicator */}
+                {iconBounce && (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 animate-bounce z-50">
+                        <span className="text-[150px] text-red-500 font-bold drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">!</span>
+                    </div>
+                )}
 
                 <div
-                    onClick={() => setShowChatbot(true)}
+                    onClick={handleChatbotClick}
                     style={{ width: '350px', height: '350px' }}
-                    className="rounded-full border-2 border-cyan-400 cursor-pointer overflow-hidden hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:shadow-[0_0_30px_rgba(34,211,238,0.8)] bg-black"
+                    className={`rounded-full border-2 border-cyan-400 cursor-pointer overflow-hidden hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:shadow-[0_0_30px_rgba(34,211,238,0.8)] bg-black ${iconBounce && !introPlayed ? 'animate-pulse' : ''}`}
                 >
                     <img
                         src={adaIcon}
