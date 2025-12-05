@@ -1,0 +1,33 @@
+[
+  {
+    "id": "1764902542008",
+    "username": "Yohan",
+    "email": "yohan.saint-marc@hotmail.com",
+    "password": "$2a$10$qgmhp3RyE3z8FzP7q2huveTOKMT0hsqD1Ed70Ev6FRe09nocSCdtG",
+    "createdAt": "2025-12-05T02:42:22.008Z",
+    "profile": {
+      "level": "expert",
+      "pain": "neck_pain",
+      "goal": "strength",
+      "infra": "mixed_posture",
+      "uptime": "long",
+      "environment": "home_no_equipment",
+      "hasPain": true,
+      "needsCore": false,
+      "needsStretch": true,
+      "needsWristCare": false,
+      "isBeginnerFriendly": false,
+      "riskScore": 5,
+      "priorities": [
+        "mobility",
+        "stretch",
+        "legs",
+        "core"
+      ],
+      "title": "Protocole : Libération Cervicale",
+      "description": "Tensions cervicales détectées. On va libérer ta nuque et améliorer ta posture.",
+      "createdAt": "2025-12-05T02:44:55.684Z"
+    },
+    "routinesCompleted": 0
+  }
+]

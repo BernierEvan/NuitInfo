@@ -1,0 +1,166 @@
+[
+  {
+    "id": "infra",
+    "question": "🏢 Quelle est ton infrastructure de déploiement (Posture) ?",
+    "category": "posture",
+    "icon": "🪑",
+    "options": [
+      {
+        "label": "Serveur Rack Optimisé (Chaise ergo + écrans réglés)",
+        "value": "good_posture",
+        "score": 2
+      },
+      {
+        "label": "Poste Mobile (Bureau adjustable / Debout parfois)",
+        "value": "mixed_posture",
+        "score": 1
+      },
+      {
+        "label": "Legacy Hardware (Chaise de cuisine / Table basse)",
+        "value": "bad_posture",
+        "score": 0
+      },
+      {
+        "label": "Architecture Cloud Flottante (Canapé / Lit)",
+        "value": "terrible_posture",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "uptime",
+    "question": "⏱️ Quel est ton Uptime (temps assis sans bouger) depuis le dernier reboot ?",
+    "category": "sedentarity",
+    "icon": "⏰",
+    "options": [
+      {
+        "label": "< 1h (Micro-services agiles - Pauses fréquentes)",
+        "value": "short",
+        "score": 3
+      },
+      {
+        "label": "2h - 4h (Monolithe stable)",
+        "value": "medium",
+        "score": 1
+      },
+      {
+        "label": "4h - 8h (On commence à swapper...)",
+        "value": "long",
+        "score": 0
+      },
+      {
+        "label": "8h+ (Infinite Loop - Aidez-moi)",
+        "value": "infinite",
+        "score": 0
+      }
+    ]
+  },
+  {
+    "id": "pain",
+    "question": "🩹 Où se situent tes principaux bugs physiques ?",
+    "category": "focus",
+    "icon": "⚠️",
+    "options": [
+      {
+        "label": "Backend (Lombaires / Bas du dos)",
+        "value": "back_pain"
+      },
+      {
+        "label": "Input/Output (Poignets / Canal Carpien / Mains)",
+        "value": "wrist_pain"
+      },
+      {
+        "label": "Head Node (Nuque / Cervicales / Haut du dos)",
+        "value": "neck_pain"
+      },
+      {
+        "label": "Lower Stack (Genoux / Hanches)",
+        "value": "knee_pain"
+      },
+      {
+        "label": "Aucun bug, tout est en prod ✅",
+        "value": "no_pain"
+      }
+    ]
+  },
+  {
+    "id": "goal",
+    "question": "🎯 Quel correctif (Patch) veux-tu appliquer à ton corps ?",
+    "category": "goal",
+    "icon": "🚀",
+    "options": [
+      {
+        "label": "Renforcer le Firewall (Gainage / Core)",
+        "value": "core"
+      },
+      {
+        "label": "Optimiser la bande passante (Souplesse / Étirements)",
+        "value": "flexibility"
+      },
+      {
+        "label": "Upgrade Hardware (Force / Musculation)",
+        "value": "strength"
+      },
+      {
+        "label": "Clean Architecture (Posture / Alignement)",
+        "value": "posture"
+      },
+      {
+        "label": "Maintenance douce (Relaxation / Récupération)",
+        "value": "recovery"
+      }
+    ]
+  },
+  {
+    "id": "level",
+    "question": "💪 Fréquence de tes 'Commits Musculaires' (Sport) ?",
+    "category": "level",
+    "icon": "📊",
+    "options": [
+      {
+        "label": "404 Muscle Not Found (Jamais / Rarement)",
+        "value": "beginner",
+        "score": 0
+      },
+      {
+        "label": "Weekly Backup (1-2x par semaine)",
+        "value": "intermediate",
+        "score": 2
+      },
+      {
+        "label": "Patch Tuesday (3-4x par semaine)",
+        "value": "advanced",
+        "score": 3
+      },
+      {
+        "label": "Overclocking (5+ / Athlete)",
+        "value": "expert",
+        "score": 4
+      }
+    ]
+  },
+  {
+    "id": "environment",
+    "question": "🏠 Où se situe ton environnement de développement sportif ?",
+    "category": "environment",
+    "icon": "🏋️",
+    "options": [
+      {
+        "label": "Localhost (À la maison, sans matériel)",
+        "value": "home_no_equipment"
+      },
+      {
+        "label": "Localhost+ (À la maison, avec du matériel basique)",
+        "value": "home_equipment"
+      },
+      {
+        "label": "Cloud Provider (Salle de sport)",
+        "value": "gym"
+      },
+      {
+        "label": "Edge Computing (Extérieur / Parc)",
+        "value": "outdoor"
+      }
+    ]
+  }
+]

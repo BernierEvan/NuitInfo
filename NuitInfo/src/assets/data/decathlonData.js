@@ -1,4 +1,3 @@
-// src/data/decathlonData.js
 
 // ==========================================================
 // 1. LE QUIZ (DIAGNOSTIC)
@@ -10,9 +9,10 @@ export const questions = [
     question: "Quelle est ton infrastructure de déploiement actuelle ?",
     category: "infra",
     options: [
-      { text: "Serveur Rack Optimisé (Chaise ergo + écran réglé)", score: 2 },
-      { text: "Legacy Hardware (Chaise de cuisine + pc portable)", score: 0 },
-      { text: "Architecture Cloud Flottante (Allongé dans le lit/canapé)", score: 0 },
+      { text: "Serveur Rack Optimisé (Chaise ergo + écran réglé)", score: 2, value: "ergonomic" },
+      { text: "Poste Mobile (Bureau / Table improvisée)", score: 1, value: "mobile" },
+      { text: "Legacy Hardware (Chaise de cuisine + pc portable)", score: 0, value: "legacy" },
+      { text: "Architecture Cloud Flottante (Allongé dans le lit/canapé)", score: 0, value: "sofa" },
     ],
   },
   // --- QUESTION 2 : SÉDENTARITÉ (UPTIME) ---
@@ -21,9 +21,10 @@ export const questions = [
     question: "Quel est ton Uptime (temps sans bouger) depuis le dernier reboot ?",
     category: "uptime",
     options: [
-      { text: "< 1h (Micro-services agiles)", score: 3 },
-      { text: "2h - 4h (Monolithe stable)", score: 1 },
-      { text: "8h+ (Infinite Loop, aidez-moi)", score: 0 },
+      { text: "< 1h (Micro-services agiles)", score: 3, value: "short" },
+      { text: "2h - 4h (Monolithe stable)", score: 1, value: "medium" },
+      { text: "4h - 8h (On commence à swapper)", score: 1, value: "long" },
+      { text: "8h+ (Infinite Loop, aidez-moi)", score: 0, value: "infinite" },
     ],
   },
   // --- QUESTION 3 : HYDRATATION (COOLING) ---
@@ -32,9 +33,10 @@ export const questions = [
     question: "État de ton système de refroidissement (Hydratation) ?",
     category: "water",
     options: [
-      { text: "Liquid Cooling actif (Je bois de l'eau)", score: 2 },
-      { text: "Juste du Café (Java Runtime Environment)", score: 1 },
-      { text: "Surchauffe critique (J'ai soif)", score: 0 },
+      { text: "Liquid Cooling actif (Je bois de l'eau)", score: 2, value: "hydrated" },
+      { text: "Juste du Café (Java Runtime Environment)", score: 1, value: "coffee" },
+      { text: "Boisson Énergétique (Overclocking temporaire)", score: 1, value: "energy" },
+      { text: "Surchauffe critique (J'ai soif)", score: 0, value: "thirsty" },
     ],
   },
   // --- QUESTION 4 : DOULEURS (BUGS) - CRUCIAL ---
@@ -55,13 +57,13 @@ export const questions = [
     question: "Combien de sessions de 'Build Musculaire' lances-tu par semaine ?",
     category: "activity",
     options: [
-      { text: "0 - 404 Muscle Not Found", score: 0 },
-      { text: "1 - Weekly Backup (Le dimanche)", score: 1 },
-      { text: "2 - Patch Tuesday (Occasionnel)", score: 2 },
-      { text: "3 - Release Candidate (Régulier)", score: 3 },
-      { text: "4 - High Availability (Sérieux)", score: 4 },
-      { text: "5 - Overclocking (Intense)", score: 5 },
-      { text: "6+ - DDoS Attack (Je vis à la salle)", score: 6 },
+      { text: "0 - 404 Muscle Not Found", score: 0, value: 0 },
+      { text: "1 - Weekly Backup (Le dimanche)", score: 1, value: 1 },
+      { text: "2 - Patch Tuesday (Occasionnel)", score: 2, value: 2 },
+      { text: "3 - Release Candidate (Régulier)", score: 3, value: 3 },
+      { text: "4 - High Availability (Sérieux)", score: 4, value: 4 },
+      { text: "5 - Overclocking (Intense)", score: 5, value: 5 },
+      { text: "6+ - DDoS Attack (Je vis à la salle)", score: 6, value: 6 },
     ],
   },
   // --- QUESTION 6 : YEUX (VISION) ---
@@ -70,9 +72,9 @@ export const questions = [
     question: "État de tes capteurs optiques après cette Nuit de l'Info ?",
     category: "eyes",
     options: [
-      { text: "4K HDR (Tout va bien)", score: 2 },
-      { text: "Pixelisé (Fatigue visuelle)", score: 1 },
-      { text: "Blue Screen of Death (Je ne vois plus rien)", score: 0 },
+      { text: "4K HDR (Tout va bien)", score: 2, value: "good" },
+      { text: "Pixelisé (Fatigue visuelle)", score: 1, value: "tired" },
+      { text: "Blue Screen of Death (Je ne vois plus rien)", score: 0, value: "bad" },
     ],
   },
   // --- QUESTION 7 : OBJECTIF (CIBLE) ---
@@ -84,6 +86,7 @@ export const questions = [
       { text: "Renforcer le Firewall (Gainage / Abdos)", value: "core" },
       { text: "Optimiser la bande passante (Souplesse / Yoga)", value: "flex" },
       { text: "Upgrade Hardware complet (Force / Jambes)", value: "strength" },
+      { text: "Maintenance douce (Mobilité / Étirements)", value: "relax" },
     ],
   },
 ];
@@ -131,6 +134,8 @@ export const jokes = [
 
 // ==========================================================
 // 3. LES RÉSULTATS (ROUTINES SPORTIVES PHASE 3)
+// Chaque protocole comprend 3 actions/exercices, un champ 'type' pour badge,
+// et des détails complémentaires pour la popup (steps, benefits, duration, reps).
 // ==========================================================
 export const results = {
   // --- CAS 1 : PLANCHE (Main) + YEUX (Bonus) ---
@@ -141,21 +146,42 @@ export const results = {
     exercises: [
       {
         id: 1,
-        name: "1. La Planche (Firewall Config)",
-        instruction: "Mets-toi sur les avant-bras et orteils. Corps droit comme un câble RJ45 neuf. Contracte les abdos pour bloquer les intrusions. Tiens 30 secondes.",
-        imageKey: "plank_img" // Utilise le GIF importé
+        name: "La Planche (Firewall Config)",
+        instruction: "Mets-toi sur les avant-bras et orteils. Corps droit. Contracte les abdos. Tiens 30s.",
+        imageKey: "plank_img",
+        type: "sport",
+        detail: "Augmente la stabilité du tronc et protège le bas du dos.",
+        steps: ["Position sur avant-bras", "Aligner tête et bassin", "Contracter abdos", "Respirer calmement"],
+        benefits: ["Stabilité lombaire", "Meilleure posture", "Réduction des douleurs dorsales"],
+        duration: "30-60s", reps: "3 séries"
       },
       {
         id: 2,
-        name: "2. Reset Optique (Yeux)",
-        instruction: "Détourne le regard de l'écran. Fixe un point au loin (le mur du fond) pendant 20s. Cligne des yeux pour réhydrater les capteurs.",
-        imageKey: "eyes_img" // Pas de GIF, affichera le texte placeholder
+        name: "Dead Bug (Core Release)",
+        instruction: "Allongé dos au sol, bras vers le ciel, alterne jambe/bras opposés sans cambrer.",
+        imageKey: "plank_img",
+        type: "sport",
+        detail: "Contrôle moteur profond du tronc, parfait avant les exercices plus lourds.",
+        steps: ["Dos collé au sol", "Mouvement lent et contrôlé", "Ne pas cambrer le bas du dos"],
+        benefits: ["Activation du transverse", "Prévention des douleurs lombaires"],
+        duration: "8-12 reps", reps: "3 séries"
+      },
+      {
+        id: 3,
+        name: "Reset Optique (Yeux)",
+        instruction: "Détourne le regard, fixe un point au loin 20s, cligne pour réhydrater.",
+        imageKey: "eyes_img",
+        type: "nird",
+        detail: "Pause visuelle simple pour réduire la fatigue oculaire après coding marathon.",
+        steps: ["Regarder au loin 20s", "Cligner plusieurs fois", "Faire des petits cercles oculaires"],
+        benefits: ["Moins de fatigue", "Réduction des maux de tête"],
+        duration: "20s", reps: "À répéter 3x/jour"
       }
     ],
     product: {
       name: "Tapis de Sol Confort 15mm",
       link: "https://www.decathlon.fr/p/tapis-pilates-taille-m-15-mm-confort-gris/_/R-p-324637",
-      reason: "Une couche d'abstraction matérielle indispensable entre tes coudes et le sol dur."
+      reason: "Une couche d'abstraction matérielle entre tes coudes et le sol dur."
     }
   },
 
@@ -167,21 +193,42 @@ export const results = {
     exercises: [
       {
         id: 1,
-        name: "1. Étirement 'Stop' (Poignets)",
-        instruction: "Bras tendu devant, paume vers l'extérieur (le geste 'Stop'). Tire doucement tes doigts vers toi avec l'autre main. 15s par main.",
-        imageKey: "stretch_img" 
+        name: "Étirement 'Stop' (Poignets)",
+        instruction: "Bras tendu, paume vers l'extérieur. Tire doucement les doigts vers toi 15s par main.",
+        imageKey: "stretch_img",
+        type: "sport",
+        detail: "Étire les fléchisseurs du poignet, soulage après la session clavier.",
+        steps: ["Bras tendu", "Paume vers l'extérieur", "Tirer doucement les doigts"],
+        benefits: ["Moins de tensions", "Prévention du canal carpien"],
+        duration: "15s", reps: "2-3 par main"
       },
       {
         id: 2,
-        name: "2. Rotation Cervicale (Nuque)",
-        instruction: "Fais des cercles lents avec la tête. Imagine que tu scannes tes 3 écrans au ralenti. Ne force jamais sur les butées.",
-        imageKey: "neck_img"
+        name: "Rotation Cervicale (Nuque)",
+        instruction: "Fais des cercles lents avec la tête. Imagine scanner tes écrans au ralenti.",
+        imageKey: "neck_img",
+        type: "sport",
+        detail: "Détend les muscles de la nuque et améliore la mobilité cervicale.",
+        steps: ["Respirer profondément", "Faire de petits cercles contrôlés", "Ne pas forcer"],
+        benefits: ["Moins de raideur", "Meilleure amplitude"],
+        duration: "30s", reps: "2-3"
+      },
+      {
+        id: 3,
+        name: "Roller de Poignet (Self-Massage)",
+        instruction: "Utilise une petite balle ou roule tes avant-bras sur une bouteille pour détendre.",
+        imageKey: "wrist_img",
+        type: "nird",
+        detail: "Auto-massage ciblé pour relâcher les tensions après debugging intense.",
+        steps: ["Rouler avant-bras", "Appuyer modérément", "Cibler zones douloureuses"],
+        benefits: ["Améliore la circulation", "Réduit les points de tension"],
+        duration: "2-3 min", reps: "1-2"
       }
     ],
     product: {
       name: "Balle de Massage Double",
       link: "https://www.decathlon.fr/p/balle-de-massage-500-double-vibrante/_/R-p-324240",
-      reason: "L'outil parfait pour rouler sur tes bugs musculaires et détendre les avant-bras."
+      reason: "Parfaite pour rouler sur tes bugs musculaires et détendre les avant-bras."
     }
   },
 
@@ -189,25 +236,46 @@ export const results = {
   legs_strength: {
     title: "Protocole : Git Push --Force",
     level: "Grade : Fullstack Power",
-    description: "Tu es trop statique. Il faut réactiver les moteurs hydrauliques inférieurs pour supporter la charge serveur.",
+    description: "Tu es trop statique. Réactive les moteurs inférieurs pour supporter la charge serveur.",
     exercises: [
       {
         id: 1,
-        name: "1. Le Squat (Reboot Système)",
-        instruction: "Pieds largeur épaules. Descends les fesses comme pour t'asseoir sur un serveur lame invisible. Garde le dos droit. Remonte en poussant sur les talons.",
-        imageKey: "squat_img"
+        name: "Le Squat (Reboot Système)",
+        instruction: "Pieds largeur épaules. Descends comme pour t'asseoir. Remonte en poussant sur les talons.",
+        imageKey: "squat_img",
+        type: "sport",
+        detail: "Renforce quadriceps, fessiers et stabilité globale.",
+        steps: ["Pieds parallèles", "Descendre contrôle", "Remonter par les talons"],
+        benefits: ["Force des jambes", "Meilleure posture"],
+        duration: "8-12 reps", reps: "3 séries"
       },
       {
         id: 2,
-        name: "2. La Pince (Dos)",
-        instruction: "Debout, penche-toi en avant jambes tendues pour essayer de toucher tes pieds (ou tes genoux). Relâche la tête. Laisse la gravité faire le travail.",
-        imageKey: "yoga_img" // On réutilise le GIF yoga qui s'en rapproche
+        name: "La Pince (Dos)",
+        instruction: "Debout, penche-toi en avant jambes tendues pour toucher les pieds ou genoux.",
+        imageKey: "yoga_img",
+        type: "sport",
+        detail: "Étire les ischio-jambiers et le bas du dos, bon cooldown.",
+        steps: ["Expirer en descendant", "Relâcher la nuque", "Respirer profondément"],
+        benefits: ["Diminution de la tension dorsale", "Amplitude"],
+        duration: "30s", reps: "2"
+      },
+      {
+        id: 3,
+        name: "Fentes Alternées (Load Balancer)",
+        instruction: "Grand pas en avant, genou arrière proche du sol, pousser et revenir.",
+        imageKey: "squat_img",
+        type: "sport",
+        detail: "Travaille l'équilibre et l'endurance des jambes.",
+        steps: ["Pas en avant", "Baisser genou arrière", "Pousser pour revenir"],
+        benefits: ["Équilibre", "Force unilatérale"],
+        duration: "8-10 reps", reps: "3 séries par jambe"
       }
     ],
     product: {
       name: "Elastique Training 15kg",
       link: "https://www.decathlon.fr/p/elastique-musculation-training-band-15-kg/_/R-p-324263",
-      reason: "Ajoute de la résistance à tes tests unitaires musculaires. Léger et open-source (c'est du caoutchouc)."
+      reason: "Ajoute de la résistance à tes tests unitaires musculaires."
     }
   },
 
@@ -219,21 +287,42 @@ export const results = {
     exercises: [
       {
         id: 1,
-        name: "1. Posture de l'Enfant (Child Process)",
-        instruction: "À genoux, fesses sur les talons, allonge les bras loin devant au sol. Pose le front. Respire profondément pour vider le cache.",
-        imageKey: "yoga_img"
+        name: "Posture de l'Enfant (Child Process)",
+        instruction: "À genoux, fesses sur les talons, allonge les bras loin devant. Pose le front.",
+        imageKey: "yoga_img",
+        type: "nird",
+        detail: "Repos et relâche du bas du dos, excellente pause pour reprendre le souffle.",
+        steps: ["S'installer sur les talons", "Allonger les bras", "Respirer lentement"],
+        benefits: ["Relaxation", "Relâchement lombaire"],
+        duration: "1-2 min", reps: "1-2"
       },
       {
         id: 2,
-        name: "2. Torsion Assise (Refactoring)",
-        instruction: "Assis, tourne le buste vers la droite, main gauche sur genou droit. Regarde derrière. Change de côté. Ça essore la colonne vertébrale.",
-        imageKey: "twist_img"
+        name: "Torsion Assise (Refactoring)",
+        instruction: "Assis, tourne le buste vers la droite, main gauche sur genou droit. Change de côté.",
+        imageKey: "twist_img",
+        type: "sport",
+        detail: "Mobilise la colonne en douceur et aide la digestion après la veille.",
+        steps: ["Assis droit", "Tourner doucement", "Respirer et changer de côté"],
+        benefits: ["Mobilité colonne", "Détente"],
+        duration: "30s par côté", reps: "2"
+      },
+      {
+        id: 3,
+        name: "Chat / Vache (Version Debug)",
+        instruction: "À quatre pattes, alterner dos rond et dos creux en respirant.",
+        imageKey: "yoga_img",
+        type: "nird",
+        detail: "Mobilise toute la colonne et réchauffe les articulations.",
+        steps: ["Position à 4 pattes", "Inhaler - creuser le dos", "Exhaler - arrondir le dos"],
+        benefits: ["Mobilité générale", "Prépare aux postures prolongées"],
+        duration: "1 min", reps: "Répetition fluide pendant 6-8 cycles"
       }
     ],
     product: {
       name: "Brique de Yoga en Liège",
       link: "https://www.decathlon.fr/p/brique-yoga-liege/_/R-p-170425",
-      reason: "Un support stable, durable et éco-responsable (esprit NIRD) pour tes sessions."
+      reason: "Support stable, durable et éco-responsable pour tes sessions."
     }
   }
 };

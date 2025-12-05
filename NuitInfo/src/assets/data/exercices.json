@@ -1,0 +1,416 @@
+[
+  {
+    "id": "plank",
+    "name": "La Planche (Firewall Config)",
+    "type": "core",
+    "difficulty": "beginner",
+    "duration": "30-60s",
+    "reps": "3 séries",
+    "imageKey": "plank_img",
+    "targetMuscles": [
+      "abdominaux",
+      "transverse",
+      "lombaires"
+    ],
+    "instructions": {
+      "general": "Position sur les avant-bras et orteils. Corps aligné comme un câble réseau parfaitement tendu. Contracte les abdos, serre les fessiers, respire normalement.",
+      "beginner": "Pose les genoux au sol pour réduire l'intensité. L'important est de garder le dos DROIT. 20 secondes c'est déjà bien !",
+      "back_pain": "⚠️ CRITIQUE : Ne cambre JAMAIS le dos ! Si tension lombaire : remonte légèrement les fesses OU pose les genoux.",
+      "neck_pain": "Garde la tête dans l'alignement de la colonne. Regarde le sol entre tes mains.",
+      "advanced": "Augmente la durée progressivement. Essaie la planche sur les mains ou ajoute des variations."
+    },
+    "steps": [
+      "Place-toi face au sol, appuyé sur les avant-bras",
+      "Aligne coudes sous les épaules",
+      "Soulève le corps, pointe des pieds au sol",
+      "Contracte abdos ET fessiers",
+      "Respire normalement, tiens la position"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Dos creusé (cambrure)",
+        "danger": "high",
+        "fix": "Rentre le nombril, contracte les abdos, serre les fessiers"
+      },
+      {
+        "mistake": "Fesses trop hautes (pic)",
+        "danger": "medium",
+        "fix": "Aligne épaules-hanches-chevilles sur une même ligne"
+      },
+      {
+        "mistake": "Tête relevée",
+        "danger": "medium",
+        "fix": "Regarde le sol entre tes mains, nuque neutre"
+      }
+    ],
+    "benefits": [
+      "Stabilité du tronc",
+      "Protection lombaire",
+      "Meilleure posture au bureau"
+    ],
+    "contraindications": [
+      "Hernie discale active",
+      "Douleur aigüe dans le bas du dos"
+    ],
+    "products": [
+      "mat_comfort"
+    ]
+  },
+  {
+    "id": "squat",
+    "name": "Le Squat (Git Push --Force)",
+    "type": "legs",
+    "difficulty": "beginner",
+    "duration": "8-12 reps",
+    "reps": "3 séries",
+    "imageKey": "squat_img",
+    "targetMuscles": [
+      "quadriceps",
+      "fessiers",
+      "ischio-jambiers"
+    ],
+    "instructions": {
+      "general": "Pieds largeur épaules, pointes légèrement vers l'extérieur. Descends les fesses en arrière. Pousse sur les talons pour remonter.",
+      "beginner": "Utilise une chaise derrière toi. Assieds-toi et relève-toi sans t'aider des mains.",
+      "back_pain": "⚠️ Garde le buste DROIT et le core gainé. Ne descends pas trop bas si ton dos s'arrondit.",
+      "knee_pain": "⚠️ Ne laisse pas tes genoux dépasser tes orteils. Pousse les fesses EN ARRIÈRE.",
+      "advanced": "Ajoute un élastique ou des poids. Essaie le squat sur une jambe."
+    },
+    "steps": [
+      "Debout, pieds largeur épaules",
+      "Pousse les fesses vers l'arrière",
+      "Descends comme pour t'asseoir",
+      "Garde les talons au sol",
+      "Remonte en poussant sur les talons"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Genoux qui rentrent (valgus)",
+        "danger": "high",
+        "fix": "Pousse les genoux vers l'extérieur"
+      },
+      {
+        "mistake": "Talons qui décollent",
+        "danger": "high",
+        "fix": "Recule les fesses plus en arrière"
+      },
+      {
+        "mistake": "Dos qui s'arrondit",
+        "danger": "high",
+        "fix": "Regarde devant toi, sors la poitrine"
+      }
+    ],
+    "benefits": [
+      "Renforcement des jambes",
+      "Amélioration de la posture",
+      "Brûlage calorique"
+    ],
+    "contraindications": [
+      "Blessure au genou récente"
+    ],
+    "products": [
+      "elastique_15kg",
+      "foam_roller"
+    ]
+  },
+  {
+    "id": "child_pose",
+    "name": "Posture de l'Enfant (Garbage Collection)",
+    "type": "flex",
+    "difficulty": "beginner",
+    "duration": "1-2 min",
+    "reps": "2-3 répétitions",
+    "imageKey": "yoga_img",
+    "targetMuscles": [
+      "lombaires",
+      "hanches",
+      "épaules"
+    ],
+    "instructions": {
+      "general": "À genoux, fesses sur les talons, allonge les bras loin devant. Pose le front. Respire profondément.",
+      "beginner": "Si les fesses ne touchent pas les talons, place un coussin entre les deux.",
+      "back_pain": "💚 C'est L'EXERCICE IDÉAL pour toi ! Étire la colonne au maximum.",
+      "neck_pain": "Tourne légèrement la tête pour détendre la nuque.",
+      "advanced": "Étends les bras le plus loin possible."
+    },
+    "steps": [
+      "À genoux, gros orteils se touchent",
+      "Assieds-toi sur tes talons",
+      "Penche-toi en avant",
+      "Allonge les bras devant",
+      "Pose le front au sol, respire"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Tensions dans la nuque",
+        "danger": "low",
+        "fix": "Pose le front sur un coussin"
+      },
+      {
+        "mistake": "Bloquer sa respiration",
+        "danger": "medium",
+        "fix": "Inspire par le nez, expire par la bouche"
+      }
+    ],
+    "benefits": [
+      "Relâchement du dos",
+      "Détente mentale",
+      "Étirement des hanches"
+    ],
+    "contraindications": [
+      "Blessure au genou"
+    ],
+    "products": [
+      "mat_comfort",
+      "yoga_block"
+    ]
+  },
+  {
+    "id": "cat_cow",
+    "name": "Chat-Vache (Hot Reload)",
+    "type": "mobility",
+    "difficulty": "beginner",
+    "duration": "1 min",
+    "reps": "8-10 cycles",
+    "imageKey": "yoga_img",
+    "targetMuscles": [
+      "colonne vertébrale",
+      "abdominaux",
+      "dos"
+    ],
+    "instructions": {
+      "general": "À quatre pattes, alterne dos rond (chat) en expirant et dos creux (vache) en inspirant.",
+      "beginner": "Commence lentement. Sens chaque vertèbre bouger une par une.",
+      "back_pain": "💚 Excellent pour toi ! Réduis l'amplitude si douleur.",
+      "neck_pain": "Bouge la tête en harmonie avec le dos.",
+      "advanced": "Ajoute des cercles de hanches entre chaque cycle."
+    },
+    "steps": [
+      "Position à quatre pattes",
+      "CHAT: Expire, arrondis le dos",
+      "VACHE: Inspire, creuse le dos",
+      "Alterne fluidement"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Mouvement saccadé",
+        "danger": "low",
+        "fix": "Ralentis, synchronise avec la respiration"
+      },
+      {
+        "mistake": "Ignorer la respiration",
+        "danger": "medium",
+        "fix": "Inspire = Vache, Expire = Chat"
+      }
+    ],
+    "benefits": [
+      "Mobilité de la colonne",
+      "Échauffement du dos",
+      "Réduction des raideurs"
+    ],
+    "contraindications": [
+      "Blessure au poignet"
+    ],
+    "products": [
+      "mat_comfort"
+    ]
+  },
+  {
+    "id": "wrist_stretch",
+    "name": "Étirement Poignets (Debug I/O)",
+    "type": "stretch",
+    "difficulty": "beginner",
+    "duration": "15s par côté",
+    "reps": "3 par main",
+    "imageKey": "wrist_img",
+    "targetMuscles": [
+      "fléchisseurs du poignet",
+      "avant-bras"
+    ],
+    "instructions": {
+      "general": "Bras tendu, paume vers l'extérieur. Tire doucement les doigts vers toi.",
+      "beginner": "Commence doucement, 10 secondes suffisent.",
+      "wrist_pain": "💚 ESSENTIEL pour toi ! Fais cet exercice AVANT et APRÈS chaque session de code.",
+      "advanced": "Ajoute des rotations de poignet."
+    },
+    "steps": [
+      "Tends un bras, paume vers l'avant",
+      "Attrape les doigts avec l'autre main",
+      "Tire doucement vers toi",
+      "Maintiens 15 secondes",
+      "Change de main"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Tirer trop fort",
+        "danger": "high",
+        "fix": "L'étirement doit être doux"
+      },
+      {
+        "mistake": "Oublier un côté",
+        "danger": "low",
+        "fix": "Toujours équilibrer les deux mains"
+      }
+    ],
+    "benefits": [
+      "Prévention du canal carpien",
+      "Réduction des tensions"
+    ],
+    "contraindications": [
+      "Blessure au poignet récente"
+    ],
+    "products": [
+      "massage_ball"
+    ]
+  },
+  {
+    "id": "neck_rotation",
+    "name": "Rotation Cervicale (Scan System)",
+    "type": "mobility",
+    "difficulty": "beginner",
+    "duration": "30s",
+    "reps": "5 par côté",
+    "imageKey": "neck_img",
+    "targetMuscles": [
+      "trapèzes",
+      "cervicales",
+      "scalènes"
+    ],
+    "instructions": {
+      "general": "Assis ou debout, dos droit. Fais de lents mouvements de rotation de la tête.",
+      "beginner": "Commence par de petits mouvements. Imagine scanner tes écrans au ralenti.",
+      "neck_pain": "⚠️ Va TRÈS doucement. Si douleur vive, STOP.",
+      "advanced": "Ajoute des inclinaisons latérales."
+    },
+    "steps": [
+      "Assis bien droit, épaules relâchées",
+      "Tourne lentement vers la droite",
+      "Maintiens 3 secondes",
+      "Répète vers la gauche",
+      "Fais de petits cercles"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Mouvements trop rapides",
+        "danger": "high",
+        "fix": "Très lent ! Compte 3 secondes"
+      },
+      {
+        "mistake": "Épaules qui montent",
+        "danger": "medium",
+        "fix": "Relâche les épaules"
+      }
+    ],
+    "benefits": [
+      "Réduction des tensions cervicales",
+      "Meilleure mobilité du cou"
+    ],
+    "contraindications": [
+      "Vertiges",
+      "Problèmes cervicaux"
+    ],
+    "products": [
+      "massage_ball"
+    ]
+  },
+  {
+    "id": "hip_flexor_stretch",
+    "name": "Étirement Psoas (Memory Leak Fix)",
+    "type": "stretch",
+    "difficulty": "intermediate",
+    "duration": "30s par côté",
+    "reps": "2-3 par côté",
+    "imageKey": "hip_img",
+    "targetMuscles": [
+      "psoas",
+      "quadriceps",
+      "hanches"
+    ],
+    "instructions": {
+      "general": "Fentes avant, genou arrière au sol. Pousse les hanches vers l'avant.",
+      "beginner": "Place un coussin sous le genou arrière.",
+      "back_pain": "💚 Ton psoas est probablement raccourci. Cet exercice est CRUCIAL.",
+      "knee_pain": "Utilise un coussin épais sous le genou arrière.",
+      "advanced": "Lève le bras du même côté et incline-toi."
+    },
+    "steps": [
+      "Genoux au sol, un pas en avant",
+      "Genou avant à 90°, genou arrière au sol",
+      "Garde le buste droit",
+      "Pousse les hanches vers l'avant",
+      "Respire, 30 secondes par côté"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Buste penché en avant",
+        "danger": "medium",
+        "fix": "Redresse-toi, contracte les abdos"
+      },
+      {
+        "mistake": "Genou qui dépasse le pied",
+        "danger": "medium",
+        "fix": "Recule le pied avant"
+      }
+    ],
+    "benefits": [
+      "Libération du psoas",
+      "Soulagement des lombaires"
+    ],
+    "contraindications": [
+      "Douleur au genou"
+    ],
+    "products": [
+      "mat_comfort",
+      "yoga_block"
+    ]
+  },
+  {
+    "id": "dead_bug",
+    "name": "Dead Bug (Core.sys)",
+    "type": "core",
+    "difficulty": "intermediate",
+    "duration": "8-12 reps",
+    "reps": "3 séries",
+    "imageKey": "deadbug_img",
+    "targetMuscles": [
+      "transverse",
+      "abdominaux",
+      "stabilisateurs"
+    ],
+    "instructions": {
+      "general": "Allongé dos au sol, bras vers le ciel, genoux à 90°. Abaisse bras et jambe OPPOSÉS.",
+      "beginner": "Garde les genoux pliés et ne bouge que les bras au début.",
+      "back_pain": "💚 L'exercice abdominal LE PLUS SÛR pour le dos. Garde le bas du dos collé au sol.",
+      "advanced": "Ralentis à 4 secondes par rep."
+    },
+    "steps": [
+      "Allongé sur le dos, bras vers le plafond",
+      "Lève les jambes, genoux à 90°",
+      "Colle le bas du dos au sol",
+      "Abaisse bras droit + jambe gauche",
+      "Alterne de l'autre côté"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Bas du dos qui se creuse",
+        "danger": "high",
+        "fix": "Réduis l'amplitude, garde le dos plaqué"
+      },
+      {
+        "mistake": "Mouvements rapides",
+        "danger": "medium",
+        "fix": "Lent et contrôlé"
+      }
+    ],
+    "benefits": [
+      "Renforcement profond du core",
+      "Protection du dos"
+    ],
+    "contraindications": [
+      "Douleur lombaire aiguë"
+    ],
+    "products": [
+      "mat_comfort"
+    ]
+  }
+]
