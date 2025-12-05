@@ -1,0 +1,603 @@
+[
+  {
+    "id": "plank",
+    "name": "La Planche",
+    "type": "core",
+    "difficulty": "beginner",
+    "duration": "30-60s",
+    "reps": "3 séries",
+    "imageKey": "plank_img",
+    "targetMuscles": [
+      "abdominaux",
+      "transverse",
+      "lombaires"
+    ],
+    "instructions": {
+      "general": "Position sur les avant-bras et orteils. Corps aligné. Contracte les abdos, serre les fessiers.",
+      "beginner": "Pose les genoux au sol pour réduire l'intensité. 20 secondes c'est déjà bien !",
+      "back_pain": "⚠️ Ne cambre JAMAIS le dos ! Si tension : remonte les fesses OU pose les genoux.",
+      "neck_pain": "Garde la tête alignée. Regarde le sol entre tes mains.",
+      "advanced": "Augmente la durée. Essaie la planche sur les mains."
+    },
+    "steps": [
+      "Appui sur avant-bras",
+      "Aligne coudes sous épaules",
+      "Soulève le corps",
+      "Contracte abdos + fessiers",
+      "Respire normalement"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Dos creusé",
+        "danger": "high",
+        "fix": "Rentre le nombril, contracte les abdos"
+      },
+      {
+        "mistake": "Fesses trop hautes",
+        "danger": "medium",
+        "fix": "Aligne épaules-hanches-chevilles"
+      },
+      {
+        "mistake": "Tête relevée",
+        "danger": "medium",
+        "fix": "Regarde le sol, nuque neutre"
+      }
+    ],
+    "benefits": [
+      "Stabilité du tronc",
+      "Protection lombaire",
+      "Meilleure posture"
+    ],
+    "contraindications": [
+      "Hernie discale active"
+    ],
+    "products": [
+      "mat_comfort"
+    ]
+  },
+  {
+    "id": "squat",
+    "name": "Le Squat",
+    "type": "legs",
+    "difficulty": "beginner",
+    "duration": "8-12 reps",
+    "reps": "3 séries",
+    "imageKey": "squat_img",
+    "targetMuscles": [
+      "quadriceps",
+      "fessiers",
+      "ischio-jambiers"
+    ],
+    "instructions": {
+      "general": "Pieds largeur épaules. Descends les fesses en arrière. Pousse sur les talons.",
+      "beginner": "Utilise une chaise derrière toi comme guide.",
+      "back_pain": "⚠️ Garde le buste DROIT et le core gainé.",
+      "knee_pain": "⚠️ Genoux ne dépassent pas les orteils.",
+      "advanced": "Ajoute du poids ou essaie sur une jambe."
+    },
+    "steps": [
+      "Debout, pieds largeur épaules",
+      "Pousse les fesses en arrière",
+      "Descends (cuisses parallèles)",
+      "Talons au sol",
+      "Remonte en poussant"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Genoux qui rentrent",
+        "danger": "high",
+        "fix": "Pousse les genoux vers l'extérieur"
+      },
+      {
+        "mistake": "Talons qui décollent",
+        "danger": "high",
+        "fix": "Recule les fesses plus en arrière"
+      },
+      {
+        "mistake": "Dos arrondi",
+        "danger": "high",
+        "fix": "Regarde devant, sors la poitrine"
+      }
+    ],
+    "benefits": [
+      "Jambes fortes",
+      "Meilleure posture",
+      "Brûlage calorique"
+    ],
+    "contraindications": [
+      "Blessure genou récente"
+    ],
+    "products": [
+      "elastique_15kg",
+      "foam_roller"
+    ]
+  },
+  {
+    "id": "child_pose",
+    "name": "Posture de l'Enfant",
+    "type": "flex",
+    "difficulty": "beginner",
+    "duration": "1-2 min",
+    "reps": "2-3 fois",
+    "imageKey": "yoga_img",
+    "targetMuscles": [
+      "lombaires",
+      "hanches",
+      "épaules"
+    ],
+    "instructions": {
+      "general": "À genoux, fesses sur talons, bras loin devant. Pose le front. Respire.",
+      "beginner": "Mets un coussin entre fesses et talons si besoin.",
+      "back_pain": "💚 C'est L'EXERCICE IDÉAL pour toi ! Étire la colonne.",
+      "neck_pain": "Tourne la tête d'un côté pour détendre la nuque.",
+      "advanced": "Étends les bras le plus loin possible."
+    },
+    "steps": [
+      "À genoux",
+      "Assieds-toi sur tes talons",
+      "Penche-toi en avant",
+      "Bras devant",
+      "Front au sol, respire"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Tensions dans la nuque",
+        "danger": "low",
+        "fix": "Pose le front sur un coussin"
+      },
+      {
+        "mistake": "Bloquer sa respiration",
+        "danger": "medium",
+        "fix": "Inspire par le nez, expire bouche"
+      }
+    ],
+    "benefits": [
+      "Relâchement du dos",
+      "Détente mentale",
+      "Étirement hanches"
+    ],
+    "contraindications": [
+      "Blessure au genou"
+    ],
+    "products": [
+      "mat_comfort",
+      "yoga_block"
+    ]
+  },
+  {
+    "id": "cat_cow",
+    "name": "Chat-Vache",
+    "type": "mobility",
+    "difficulty": "beginner",
+    "duration": "1 min",
+    "reps": "8-10 cycles",
+    "imageKey": "yoga_img",
+    "targetMuscles": [
+      "colonne vertébrale",
+      "abdominaux",
+      "dos"
+    ],
+    "instructions": {
+      "general": "À quatre pattes, alterne dos rond (chat) et dos creux (vache).",
+      "beginner": "Commence lentement. Sens chaque vertèbre.",
+      "back_pain": "💚 Excellent pour toi ! Réduis l'amplitude si douleur.",
+      "neck_pain": "Bouge la tête avec le dos.",
+      "advanced": "Ajoute des cercles de hanches."
+    },
+    "steps": [
+      "À quatre pattes",
+      "CHAT: Expire, arrondis le dos",
+      "VACHE: Inspire, creuse le dos",
+      "Alterne fluidement"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Mouvement saccadé",
+        "danger": "low",
+        "fix": "Ralentis, synchronise respiration"
+      },
+      {
+        "mistake": "Ignorer la respiration",
+        "danger": "medium",
+        "fix": "Inspire = Vache, Expire = Chat"
+      }
+    ],
+    "benefits": [
+      "Mobilité colonne",
+      "Échauffement dos",
+      "Moins de raideurs"
+    ],
+    "contraindications": [
+      "Blessure au poignet"
+    ],
+    "products": [
+      "mat_comfort"
+    ]
+  },
+  {
+    "id": "wrist_stretch",
+    "name": "Étirement Poignets",
+    "type": "stretch",
+    "difficulty": "beginner",
+    "duration": "15s par côté",
+    "reps": "3 par main",
+    "imageKey": "wrist_img",
+    "targetMuscles": [
+      "fléchisseurs poignet",
+      "avant-bras"
+    ],
+    "instructions": {
+      "general": "Bras tendu, paume vers l'extérieur. Tire les doigts vers toi.",
+      "beginner": "10 secondes suffisent pour commencer.",
+      "wrist_pain": "💚 ESSENTIEL pour toi ! Fais-le AVANT et APRÈS le code.",
+      "advanced": "Ajoute des rotations de poignet."
+    },
+    "steps": [
+      "Tends un bras, paume avant",
+      "Attrape les doigts",
+      "Tire doucement vers toi",
+      "Maintiens 15s",
+      "Change de main"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Tirer trop fort",
+        "danger": "high",
+        "fix": "Étirement doux !"
+      },
+      {
+        "mistake": "Oublier un côté",
+        "danger": "low",
+        "fix": "Équilibre les deux mains"
+      }
+    ],
+    "benefits": [
+      "Prévention canal carpien",
+      "Moins de tensions"
+    ],
+    "contraindications": [
+      "Blessure poignet récente"
+    ],
+    "products": [
+      "massage_ball"
+    ]
+  },
+  {
+    "id": "neck_rotation",
+    "name": "Rotation Cervicale",
+    "type": "mobility",
+    "difficulty": "beginner",
+    "duration": "30s",
+    "reps": "5 par côté",
+    "imageKey": "neck_img",
+    "targetMuscles": [
+      "trapèzes",
+      "cervicales",
+      "scalènes"
+    ],
+    "instructions": {
+      "general": "Assis dos droit. Fais de lents mouvements de rotation de la tête.",
+      "beginner": "Petits mouvements au début.",
+      "neck_pain": "⚠️ TRÈS doucement. Si douleur vive, STOP.",
+      "advanced": "Ajoute des inclinaisons latérales."
+    },
+    "steps": [
+      "Assis bien droit",
+      "Tourne lentement à droite",
+      "Maintiens 3s",
+      "Répète à gauche",
+      "Petits cercles"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Mouvements rapides",
+        "danger": "high",
+        "fix": "Très lent ! 3 secondes"
+      },
+      {
+        "mistake": "Épaules qui montent",
+        "danger": "medium",
+        "fix": "Relâche les épaules"
+      }
+    ],
+    "benefits": [
+      "Moins de tensions cervicales",
+      "Meilleure mobilité cou"
+    ],
+    "contraindications": [
+      "Vertiges",
+      "Problèmes cervicaux"
+    ],
+    "products": [
+      "massage_ball"
+    ]
+  },
+  {
+    "id": "hip_flexor_stretch",
+    "name": "Étirement Psoas",
+    "type": "stretch",
+    "difficulty": "intermediate",
+    "duration": "30s par côté",
+    "reps": "2-3 par côté",
+    "imageKey": "hip_img",
+    "targetMuscles": [
+      "psoas",
+      "quadriceps",
+      "hanches"
+    ],
+    "instructions": {
+      "general": "Fentes avant, genou arrière au sol. Pousse les hanches vers l'avant.",
+      "beginner": "Coussin sous le genou arrière.",
+      "back_pain": "💚 Ton psoas est sûrement raccourci. CRUCIAL.",
+      "knee_pain": "Coussin épais sous le genou.",
+      "advanced": "Lève le bras du même côté, incline-toi."
+    },
+    "steps": [
+      "Un genou avant, un au sol",
+      "Genou avant à 90°",
+      "Buste droit",
+      "Pousse hanches en avant",
+      "30s par côté"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Buste penché",
+        "danger": "medium",
+        "fix": "Redresse-toi, abdos gainés"
+      },
+      {
+        "mistake": "Genou dépasse pied",
+        "danger": "medium",
+        "fix": "Recule le pied avant"
+      }
+    ],
+    "benefits": [
+      "Libération du psoas",
+      "Soulagement lombaires"
+    ],
+    "contraindications": [
+      "Douleur au genou"
+    ],
+    "products": [
+      "mat_comfort",
+      "yoga_block"
+    ]
+  },
+  {
+    "id": "dead_bug",
+    "name": "Dead Bug",
+    "type": "core",
+    "difficulty": "intermediate",
+    "duration": "8-12 reps",
+    "reps": "3 séries",
+    "imageKey": "deadbug_img",
+    "targetMuscles": [
+      "transverse",
+      "abdominaux",
+      "stabilisateurs"
+    ],
+    "instructions": {
+      "general": "Allongé, bras vers le ciel, genoux à 90°. Abaisse bras et jambe opposés.",
+      "beginner": "Ne bouge que les bras au début.",
+      "back_pain": "💚 Le PLUS SÛR pour le dos. Dos collé au sol !",
+      "advanced": "Ralentis à 4 secondes par rep."
+    },
+    "steps": [
+      "Allongé, bras vers le plafond",
+      "Jambes à 90°",
+      "Dos collé au sol",
+      "Abaisse bras droit + jambe gauche",
+      "Alterne"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Dos qui se creuse",
+        "danger": "high",
+        "fix": "Réduis l'amplitude"
+      },
+      {
+        "mistake": "Mouvements rapides",
+        "danger": "medium",
+        "fix": "Lent et contrôlé"
+      }
+    ],
+    "benefits": [
+      "Core profond",
+      "Protection dos"
+    ],
+    "contraindications": [
+      "Douleur lombaire aiguë"
+    ],
+    "products": [
+      "mat_comfort"
+    ]
+  },
+  {
+    "id": "shoulder_stretch",
+    "name": "Étirement Épaules",
+    "type": "stretch",
+    "difficulty": "beginner",
+    "duration": "20s par côté",
+    "reps": "2-3 par épaule",
+    "imageKey": "stretch_img",
+    "targetMuscles": [
+      "deltoïdes",
+      "trapèzes",
+      "rhomboïdes"
+    ],
+    "instructions": {
+      "general": "Bras tendu devant, ramène-le vers la poitrine avec l'autre main.",
+      "beginner": "Doucement, sans forcer.",
+      "neck_pain": "💚 Aide à relâcher les tensions du haut du dos.",
+      "advanced": "Ajoute une rotation du buste."
+    },
+    "steps": [
+      "Bras droit tendu devant",
+      "Main gauche sur le coude",
+      "Ramène vers la poitrine",
+      "Maintiens 20s",
+      "Change de côté"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Épaule qui monte",
+        "danger": "low",
+        "fix": "Relâche l'épaule vers le bas"
+      },
+      {
+        "mistake": "Force trop forte",
+        "danger": "medium",
+        "fix": "Étirement doux"
+      }
+    ],
+    "benefits": [
+      "Souplesse épaules",
+      "Moins de tensions"
+    ],
+    "contraindications": [],
+    "products": [
+      "massage_ball"
+    ]
+  },
+  {
+    "id": "glute_bridge",
+    "name": "Pont Fessier",
+    "type": "legs",
+    "difficulty": "beginner",
+    "duration": "10-15 reps",
+    "reps": "3 séries",
+    "imageKey": "bridge_img",
+    "targetMuscles": [
+      "fessiers",
+      "ischio-jambiers",
+      "lombaires"
+    ],
+    "instructions": {
+      "general": "Allongé, genoux pliés, pieds au sol. Soulève le bassin en serrant les fessiers.",
+      "beginner": "Commence sans poids, concentre-toi sur la contraction.",
+      "back_pain": "💚 Renforce les fessiers = soulage le dos !",
+      "advanced": "Ajoute un poids sur le bassin ou une jambe levée."
+    },
+    "steps": [
+      "Allongé, genoux pliés",
+      "Pieds à plat, largeur hanches",
+      "Soulève le bassin",
+      "Serre les fessiers en haut",
+      "Redescends lentement"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Sur-arquer le bas du dos",
+        "danger": "medium",
+        "fix": "Arrête quand hanches alignées"
+      },
+      {
+        "mistake": "Pousser sur la nuque",
+        "danger": "medium",
+        "fix": "Force dans les talons"
+      }
+    ],
+    "benefits": [
+      "Fessiers forts",
+      "Stabilité bassin",
+      "Moins de douleurs lombaires"
+    ],
+    "contraindications": [],
+    "products": [
+      "mat_comfort"
+    ]
+  },
+  {
+    "id": "wall_angels",
+    "name": "Anges au Mur",
+    "type": "mobility",
+    "difficulty": "intermediate",
+    "duration": "10 reps",
+    "reps": "2-3 séries",
+    "imageKey": "wall_img",
+    "targetMuscles": [
+      "épaules",
+      "trapèzes",
+      "rhomboïdes"
+    ],
+    "instructions": {
+      "general": "Dos contre un mur, bras en W. Monte les bras au-dessus de la tête comme des ailes d'ange.",
+      "beginner": "Commence sans toucher le mur avec les mains si trop dur.",
+      "neck_pain": "💚 Parfait pour ouvrir les épaules et décompresser la nuque.",
+      "advanced": "Garde tout le dos et les bras collés au mur."
+    },
+    "steps": [
+      "Dos au mur, pieds à 10cm",
+      "Bras en W, coudes au mur",
+      "Monte les bras en gardant contact",
+      "Redescends lentement",
+      "Répète"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Dos qui se décolle",
+        "danger": "low",
+        "fix": "Contracte les abdos"
+      },
+      {
+        "mistake": "Forcer",
+        "danger": "medium",
+        "fix": "Amplitude confortable"
+      }
+    ],
+    "benefits": [
+      "Posture ouverte",
+      "Épaules mobiles",
+      "Moins de tensions nuque"
+    ],
+    "contraindications": [
+      "Blessure épaule"
+    ],
+    "products": []
+  },
+  {
+    "id": "standing_calf_stretch",
+    "name": "Étirement Mollets",
+    "type": "stretch",
+    "difficulty": "beginner",
+    "duration": "20s par jambe",
+    "reps": "2-3 par côté",
+    "imageKey": "stretch_img",
+    "targetMuscles": [
+      "mollets",
+      "tendon d'Achille"
+    ],
+    "instructions": {
+      "general": "Face à un mur, un pied avancé, l'autre reculé. Pousse le talon arrière au sol.",
+      "beginner": "Jambe arrière légèrement fléchie si trop intense.",
+      "advanced": "Jambe arrière bien tendue, talon au sol."
+    },
+    "steps": [
+      "Face au mur, mains dessus",
+      "Un pied devant, un derrière",
+      "Talon arrière au sol",
+      "Penche-toi vers le mur",
+      "Maintiens 20s"
+    ],
+    "commonMistakes": [
+      {
+        "mistake": "Talon qui décolle",
+        "danger": "low",
+        "fix": "Rapproche le pied du mur"
+      },
+      {
+        "mistake": "Genou arrière plié",
+        "danger": "low",
+        "fix": "Tends la jambe pour plus d'étirement"
+      }
+    ],
+    "benefits": [
+      "Mollets souples",
+      "Prévention blessures"
+    ],
+    "contraindications": [
+      "Tendinite d'Achille"
+    ],
+    "products": []
+  }
+]

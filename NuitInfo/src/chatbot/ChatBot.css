@@ -1,0 +1,643 @@
+/* ========================================
+   NIRD CHATBOT v1.0'€.25 - Style Terminal
+   ======================================== */
+
+/* === RESET & BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #0a0a0a;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: hidden;
+}
+
+/* === CONTAINER PRINCIPAL NIRD === */
+.nird-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 480px;
+  max-height: 700px;
+  background: #000000;
+  border: 2px solid #00cccc;
+  box-shadow: 
+    0 0 15px rgba(0, 204, 204, 0.3),
+    0 0 30px rgba(0, 204, 204, 0.15),
+    inset 0 0 20px rgba(0, 204, 204, 0.05);
+  color: #00cccc;
+  text-shadow: 0 0 3px rgba(0, 204, 204, 0.5);
+  z-index: 9999;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.nird-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* État minimisé */
+.nird-container.minimized {
+  max-height: 55px;
+  width: 340px;
+  box-shadow: 0 0 12px rgba(0, 204, 204, 0.25);
+}
+
+.nird-container.minimized .nird-chat {
+  display: none;
+}
+
+/* === HEADER === */
+.nird-header {
+  position: relative;
+  background: linear-gradient(180deg, #002626 0%, #001515 100%);
+  padding: 14px 18px;
+  border-bottom: 2px solid #00ffff;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.nird-header:hover {
+  background: linear-gradient(180deg, #003333 0%, #001a1a 100%);
+  box-shadow: inset 0 0 15px rgba(0, 204, 204, 0.15);
+}
+
+.nird-header:active {
+  transform: scale(0.98);
+}
+
+.nird-title {
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { 
+    text-shadow: 0 0 5px rgba(0, 204, 204, 0.6);
+  }
+  50% { 
+    text-shadow: 0 0 8px rgba(0, 204, 204, 0.8), 0 0 12px rgba(0, 204, 204, 0.4);
+  }
+}
+
+.nird-status {
+  font-size: 13px;
+  animation: statusBlink 2s infinite;
+  padding: 4px 8px;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 3px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+@keyframes statusBlink {
+  0%, 45% { opacity: 1; }
+  50%, 55% { opacity: 0.3; }
+  60%, 100% { opacity: 1; }
+}
+
+/* === ZONE DE CHAT === */
+.nird-chat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 645px;
+  background: rgba(0, 10, 10, 0.8);
+  z-index: 2;
+}
+
+/* Header du terminal */
+.nird-terminal-header {
+  background: #001a1a;
+  padding: 10px 18px;
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+  opacity: 0.8;
+  letter-spacing: 1px;
+}
+
+.nird-date {
+  color: #00ff88;
+  text-shadow: 0 0 5px #00ff88;
+}
+
+/* === AVATAR ASCII === */
+.nird-avatar {
+  text-align: center;
+  margin: 20px 0;
+  padding: 15px;
+  font-size: 15px;
+  line-height: 1.3;
+  color: #00cccc;
+  text-shadow: 
+    0 0 5px rgba(0, 204, 204, 0.6);
+  animation: avatarFloat 4s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(0, 204, 204, 0.08) 0%, transparent 70%);
+  border-radius: 10px;
+  position: relative;
+}
+
+@keyframes avatarFloat {
+  0%, 100% { 
+    transform: translateY(0px) scale(1);
+  }
+  50% { 
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+.nird-avatar::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(0, 204, 204, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: avatarPulse 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes avatarPulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.2;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.4;
+  }
+}
+
+/* === MESSAGES === */
+.nird-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+  background: 
+    linear-gradient(rgba(0, 20, 20, 0.5) 0%, transparent 10%, transparent 90%, rgba(0, 20, 20, 0.5) 100%);
+}
+
+/* Scrollbar personnalisée */
+.nird-messages::-webkit-scrollbar {
+  width: 10px;
+}
+
+.nird-messages::-webkit-scrollbar-track {
+  background: #000000;
+  border-left: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.nird-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00cccc 0%, #008888 100%);
+  border-radius: 5px;
+  box-shadow: 
+    0 0 5px rgba(0, 204, 204, 0.3),
+    inset 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.nird-messages::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00cccc 0%, #00aaaa 100%);
+  box-shadow: 0 0 8px rgba(0, 204, 204, 0.4);
+}
+
+/* Message individuel */
+.nird-message {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: messageSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.nird-message.user {
+  align-items: flex-end;
+}
+
+.nird-message.user .message-text {
+  background: linear-gradient(135deg, #003333 0%, #002626 100%);
+  border-left: 3px solid #00cccc;
+  text-align: right;
+  box-shadow: -2px 2px 8px rgba(0, 204, 204, 0.2);
+}
+
+.nird-message.bot .message-text {
+  background: linear-gradient(135deg, #001a1a 0%, #000d0d 100%);
+  border-left: 3px solid #00aaaa;
+  box-shadow: 2px 2px 8px rgba(0, 204, 204, 0.15);
+}
+
+.nird-message.system .message-text {
+  background: linear-gradient(135deg, #1a0808 0%, #0d0000 100%);
+  border-left: 3px solid #ff0066;
+  color: #ff0066;
+  text-shadow: 0 0 8px #ff0066;
+  box-shadow: 2px 2px 10px rgba(255, 0, 102, 0.3);
+}
+
+.timestamp {
+  font-size: 10px;
+  opacity: 0.6;
+  letter-spacing: 1px;
+  padding: 0 5px;
+}
+
+.message-text {
+  padding: 12px 15px;
+  border-radius: 5px;
+  max-width: 85%;
+  word-wrap: break-word;
+  line-height: 1.5;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+.message-text strong {
+  color: #00dd99;
+  text-shadow: 0 0 3px rgba(0, 221, 153, 0.5);
+}
+
+/* === EFFET GLITCH === */
+.nird-glitch {
+  animation: glitchEffect 0.4s infinite;
+  position: relative;
+}
+
+@keyframes glitchEffect {
+  0% { 
+    transform: translate(0);
+    text-shadow: 0 0 3px #00cccc;
+  }
+  10% { 
+    transform: translate(-2px, 2px);
+    text-shadow: -2px 0 5px #ff0066, 2px 0 5px #00cccc;
+  }
+  20% { 
+    transform: translate(2px, -2px);
+    text-shadow: 2px 0 5px #00dd99, -2px 0 5px #00cccc;
+  }
+  30% { 
+    transform: translate(-2px, -2px);
+    text-shadow: 0 2px 5px #00cccc, 0 -2px 5px #ff00cc;
+  }
+  40% { 
+    transform: translate(2px, 2px);
+    text-shadow: 0 -2px 5px #ffdd00, 0 2px 5px #00cccc;
+  }
+  50% {
+    transform: translate(-1px, 1px) skew(1deg);
+    text-shadow: -3px 0 6px #ff0066, 3px 0 6px #00cccc;
+  }
+  60% { 
+    transform: translate(1px, -1px);
+    text-shadow: 1px 0 5px #00cccc;
+  }
+  70% { 
+    transform: translate(-1px, -1px);
+    text-shadow: 0 1px 5px #00cccc;
+  }
+  80% { 
+    transform: translate(1px, 1px);
+    text-shadow: 0 -1px 5px #00cccc;
+  }
+  90% { 
+    transform: translate(-1px, 0);
+    text-shadow: -1px 0 5px #00cccc;
+  }
+  100% { 
+    transform: translate(0);
+    text-shadow: 0 0 3px #00cccc;
+  }
+}
+
+/* === INPUT === */
+.nird-input-container {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  background: linear-gradient(180deg, #001a1a 0%, #000d0d 100%);
+  border-top: 2px solid #00cccc;
+  gap: 12px;
+  box-shadow: 0 -3px 15px rgba(0, 204, 204, 0.08);
+}
+
+.prompt {
+  font-weight: bold;
+  font-size: 18px;
+  color: #00dd99;
+  text-shadow: 0 0 5px rgba(0, 221, 153, 0.5);
+  animation: promptBlink 1.5s infinite;
+}
+
+@keyframes promptBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.3; }
+}
+
+.nird-input {
+  flex: 1;
+  background: rgba(0, 204, 204, 0.05);
+  border: 1px solid rgba(0, 204, 204, 0.3);
+  color: #00cccc;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  padding: 10px 12px;
+  outline: none;
+  text-shadow: 0 0 3px rgba(0, 204, 204, 0.4);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nird-input:focus {
+  background: rgba(0, 204, 204, 0.08);
+  border-color: #00cccc;
+  box-shadow: 
+    0 0 10px rgba(0, 204, 204, 0.2),
+    inset 0 0 8px rgba(0, 204, 204, 0.08);
+}
+
+.nird-input::placeholder {
+  color: #00cccc;
+  opacity: 0.4;
+}
+
+/* === BOUTONS DE COMMANDE === */
+.nird-commands {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 18px;
+  background: #000000;
+  border-top: 1px solid rgba(0, 255, 255, 0.3);
+  gap: 12px;
+}
+
+.nird-commands button {
+  flex: 1;
+  background: rgba(0, 204, 204, 0.08);
+  border: 2px solid #00cccc;
+  color: #00cccc;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  text-shadow: 0 0 3px rgba(0, 204, 204, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.nird-commands button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 204, 204, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.nird-commands button:hover {
+  background: #00cccc;
+  color: #000000;
+  box-shadow: 
+    0 0 15px rgba(0, 204, 204, 0.4),
+    inset 0 0 8px rgba(255, 255, 255, 0.3);
+  text-shadow: none;
+  transform: translateY(-2px);
+}
+
+.nird-commands button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.nird-commands button:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 0 8px rgba(0, 204, 204, 0.3);
+}
+
+/* === INDICATEUR DE TYPING === */
+.typing-indicator {
+  display: inline-block;
+  animation: typingDots 1.5s infinite;
+}
+
+@keyframes typingDots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* === EFFET SCAN LIGNE CRT === */
+.nird-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 0%,
+    rgba(0, 204, 204, 0.02) 50%,
+    transparent 100%
+  );
+  animation: scanLine 10s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* === NOISE TEXTURE === */
+@keyframes noise {
+  0%, 100% { background-position: 0 0; }
+  10% { background-position: -5% -10%; }
+  20% { background-position: -15% 5%; }
+  30% { background-position: 7% -25%; }
+  40% { background-position: 20% 25%; }
+  50% { background-position: -25% 10%; }
+  60% { background-position: 15% 5%; }
+  70% { background-position: 0 15%; }
+  80% { background-position: 25% 35%; }
+  90% { background-position: -10% 10%; }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .nird-container {
+    width: calc(100% - 30px);
+    right: 15px;
+    left: 15px;
+    bottom: 15px;
+  }
+  
+  .nird-container.minimized {
+    width: calc(100% - 30px);
+  }
+
+  .nird-chat {
+    height: 500px;
+  }
+
+  .nird-avatar {
+    font-size: 13px;
+    margin: 15px 0;
+  }
+
+  .message-text {
+    max-width: 90%;
+    font-size: 13px;
+  }
+
+  .nird-commands {
+    flex-wrap: wrap;
+  }
+
+  .nird-commands button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nird-container {
+    width: calc(100% - 20px);
+    right: 10px;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  .nird-title {
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .nird-chat {
+    height: 400px;
+  }
+}
+
+/* === ANIMATIONS SUPPLÉMENTAIRES === */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  41%, 42% { opacity: 0.8; }
+  43%, 44% { opacity: 0.5; }
+  45% { opacity: 1; }
+}
+
+/* Effet hologramme */
+.nird-container.hologram {
+  animation: flicker 0.15s infinite;
+}
+
+/* Effet écran de veille */
+@keyframes screenSaver {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.nird-container.screensaver {
+  animation: screenSaver 10s linear infinite;
+}
+
+/* --- EFFETS ET INDICATEURS --- */
+
+/* L'indicateur de frappe */
+.typing-indicator {
+    padding: 5px 10px;
+    font-style: italic;
+    color: #4CAF50; /* Vert terminal */
+    border-top: 1px solid #1a1a1a;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Effet glitch pour l'avatar */
+.nird-avatar.nird-glitch {
+    color: #ff00ff; /* Magenta ou une couleur de bug */
+    animation: glitch-anim 0.5s infinite alternate;
+}
+
+@keyframes glitch-anim {
+    0% {
+        transform: translate(1px, 1px) skew(1deg);
+        filter: blur(0.5px);
+    }
+    100% {
+        transform: translate(-1px, -1px) skew(-1deg);
+        filter: blur(0px);
+    }
+}
+
+/* Amélioration visuelle pour les messages system */
+.nird-message.system {
+    color: #ffd700; /* Or/Jaune pour les alertes */
+    font-style: italic;
+}
+
+/* Amélioration visuelle pour l'input et le prompt */
+.nird-input-container .prompt {
+    color: #4CAF50; /* Prompt en vert */
+    font-weight: bold;
+    margin-right: 5px;
+}

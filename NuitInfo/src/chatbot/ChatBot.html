@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIRD Chatbot - Dernier espoir de l'humanité</title>
+    <link rel="stylesheet" href="./ChatBot.css">
+    </head>
+<body>
+    <div id="nird-widget" class="nird-container minimized">
+        <div class="nird-header" onclick="toggleNird()">
+            <span class="nird-title">NI#RRRRD v1.0.25</span>
+            <span class="nird-status" id="nird-status">●ON</span>
+        </div>
+        <div class="nird-chat">
+            <div class="nird-terminal-header">
+                <span>TERMINAL POST-APO 2245</span>
+                <span class="nird-date" id="nird-date"></span>
+            </div>
+            <pre class="nird-avatar" id="nird-avatar"></pre>
+            <div class="nird-messages" id="nird-messages">
+                <div class="nird-message system">
+                    <span class="timestamp">[??:??:??]</span>
+                    <span class="message-text">Système démarré... ou presque ░▓█</span>
+                </div>
+            </div>
+            
+            <div id="nird-typing" class="typing-indicator" style="display:none;">
+                <span class="timestamp">[${new Date().toLocaleTimeString()}]</span>
+                <span class="message-text">NIRD bugge... ou réfléchit...</span>
+            </div>
+            <div class="nird-input-container">
+                <span class="prompt">&gt;</span>
+                <input 
+                    type="text" 
+                    class="nird-input" 
+                    id="nird-input"
+                    placeholder="Demande-moi n'importe quoi (ou pas)..."
+                    autocomplete="off"
+                >
+            </div>
+            <div class="nird-commands">
+                <button onclick="executeCommand('/help')">?</button>
+                <button onclick="executeCommand('/reboot')">⟳</button>
+                <button onclick="executeCommand('/setname')">👤</button> 
+            </div>
+        </div>
+    </div>
+
+    <script src="./ChatBot.js"></script>
+</body>
+</html>

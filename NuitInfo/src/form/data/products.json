@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mat_comfort",
+    "name": "Tapis de Sol Confort 15mm",
+    "description": "Une couche d'abstraction matérielle entre tes coudes et le sol dur.",
+    "price": "24,99 €",
+    "rating": 4.5,
+    "image": "https://contents.mediadecathlon.com/p2140605/k$c7b5f1d7c9c5c9c9c9c9c9c9c9c9c9c9/tapis-pilates-confort-taille-m-15-mm-gris.jpg",
+    "url": "https://www.decathlon.fr/p/tapis-pilates-taille-m-15-mm-confort-gris/_/R-p-324637",
+    "tags": [
+      "sol",
+      "confort",
+      "yoga",
+      "pilates",
+      "gainage"
+    ],
+    "forPains": [
+      "back_pain",
+      "knee_pain"
+    ],
+    "forGoals": [
+      "core",
+      "flexibility",
+      "recovery"
+    ]
+  },
+  {
+    "id": "elastique_15kg",
+    "name": "Élastique Training Band 15kg",
+    "description": "Ajoute de la résistance à tes tests unitaires musculaires.",
+    "price": "8,99 €",
+    "rating": 4.6,
+    "image": "https://contents.mediadecathlon.com/p2092321/elastique-musculation-training-band-15-kg.jpg",
+    "url": "https://www.decathlon.fr/p/elastique-musculation-training-band-15-kg/_/R-p-324263",
+    "tags": [
+      "résistance",
+      "musculation",
+      "renforcement",
+      "jambes"
+    ],
+    "forPains": [],
+    "forGoals": [
+      "strength",
+      "core"
+    ]
+  },
+  {
+    "id": "massage_ball",
+    "name": "Balle de Massage Double",
+    "description": "Pour débugger les nœuds musculaires et relâcher les tensions.",
+    "price": "12,99 €",
+    "rating": 4.7,
+    "image": "https://contents.mediadecathlon.com/p2083521/balle-de-massage-500-double.jpg",
+    "url": "https://www.decathlon.fr/p/balle-de-massage-500-double-vibrante/_/R-p-324240",
+    "tags": [
+      "massage",
+      "récupération",
+      "détente",
+      "trigger point"
+    ],
+    "forPains": [
+      "back_pain",
+      "neck_pain",
+      "wrist_pain"
+    ],
+    "forGoals": [
+      "recovery",
+      "flexibility"
+    ]
+  },
+  {
+    "id": "yoga_block",
+    "name": "Brique de Yoga en Liège",
+    "description": "Support stable et durable (NIRD) pour adapter tes postures.",
+    "price": "9,99 €",
+    "rating": 4.8,
+    "image": "https://contents.mediadecathlon.com/p1890521/brique-yoga-liege.jpg",
+    "url": "https://www.decathlon.fr/p/brique-yoga-liege/_/R-p-170425",
+    "tags": [
+      "yoga",
+      "accessoire",
+      "support",
+      "liège",
+      "écologique"
+    ],
+    "forPains": [
+      "back_pain"
+    ],
+    "forGoals": [
+      "flexibility",
+      "recovery",
+      "posture"
+    ]
+  },
+  {
+    "id": "foam_roller",
+    "name": "Rouleau de Massage Foam Roller",
+    "description": "Automassage profond pour décompresser après les longues sessions.",
+    "price": "19,99 €",
+    "rating": 4.5,
+    "image": "https://contents.mediadecathlon.com/p2048521/rouleau-de-massage.jpg",
+    "url": "https://www.decathlon.fr/p/rouleau-de-massage-mousse/_/R-p-X8553874",
+    "tags": [
+      "massage",
+      "récupération",
+      "automassage",
+      "dos"
+    ],
+    "forPains": [
+      "back_pain",
+      "knee_pain"
+    ],
+    "forGoals": [
+      "recovery",
+      "flexibility"
+    ]
+  },
+  {
+    "id": "wrist_rest",
+    "name": "Repose-Poignet Ergonomique",
+    "description": "Protection hardware pour tes interfaces I/O les plus précieuses.",
+    "price": "14,99 €",
+    "rating": 4.3,
+    "image": "https://contents.mediadecathlon.com/ergonomic-wrist.jpg",
+    "url": "https://www.decathlon.fr/browse/c0-tous-les-sports/c1-accessoires/_/N-10u2y4e",
+    "tags": [
+      "ergonomie",
+      "poignet",
+      "bureau",
+      "prévention"
+    ],
+    "forPains": [
+      "wrist_pain"
+    ],
+    "forGoals": [
+      "posture"
+    ]
+  },
+  {
+    "id": "resistance_band_light",
+    "name": "Élastique Résistance Légère 5kg",
+    "description": "Idéal pour les débutants et la rééducation douce.",
+    "price": "5,99 €",
+    "rating": 4.4,
+    "image": "https://contents.mediadecathlon.com/p2092321/elastique-light.jpg",
+    "url": "https://www.decathlon.fr/p/elastique-musculation-training-band-5-kg/_/R-p-324260",
+    "tags": [
+      "débutant",
+      "rééducation",
+      "renforcement",
+      "doux"
+    ],
+    "forPains": [
+      "wrist_pain",
+      "knee_pain"
+    ],
+    "forGoals": [
+      "strength",
+      "recovery"
+    ]
+  },
+  {
+    "id": "balance_cushion",
+    "name": "Coussin d'Équilibre Proprioception",
+    "description": "Improve your stability.exe pour travailler l'équilibre et le gainage.",
+    "price": "17,99 €",
+    "rating": 4.6,
+    "image": "https://contents.mediadecathlon.com/p2092321/coussin-equilibre.jpg",
+    "url": "https://www.decathlon.fr/p/coussin-equilibre-proprioception/_/R-p-300936",
+    "tags": [
+      "équilibre",
+      "proprioception",
+      "gainage",
+      "posture"
+    ],
+    "forPains": [
+      "back_pain",
+      "knee_pain"
+    ],
+    "forGoals": [
+      "core",
+      "posture"
+    ]
+  },
+  {
+    "id": "knee_pad",
+    "name": "Genouillère de Maintien",
+    "description": "Protection et soutien pour tes joints les plus sollicités.",
+    "price": "12,99 €",
+    "rating": 4.4,
+    "image": "https://contents.mediadecathlon.com/p2092321/genouillere.jpg",
+    "url": "https://www.decathlon.fr/p/genouillere-de-maintien-adulte-soft-100/_/R-p-X8660686",
+    "tags": [
+      "protection",
+      "genou",
+      "maintien",
+      "sport"
+    ],
+    "forPains": [
+      "knee_pain"
+    ],
+    "forGoals": [
+      "strength"
+    ]
+  },
+  {
+    "id": "lumbar_support",
+    "name": "Coussin Lombaire Bureau",
+    "description": "Hotfix permanent pour ta posture assise. Supporte les lombaires toute la journée.",
+    "price": "22,99 €",
+    "rating": 4.7,
+    "image": "https://contents.mediadecathlon.com/lumbar-support.jpg",
+    "url": "https://www.decathlon.fr/browse/c0-tous-les-sports/c1-accessoires/_/N-10u2y4e",
+    "tags": [
+      "bureau",
+      "lombaire",
+      "posture",
+      "ergonomie"
+    ],
+    "forPains": [
+      "back_pain"
+    ],
+    "forGoals": [
+      "posture"
+    ]
+  }
+]
