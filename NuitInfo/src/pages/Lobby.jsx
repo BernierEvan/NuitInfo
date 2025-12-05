@@ -185,11 +185,13 @@ const Lobby = () => {
             {/* Main Content */}
             <div className={`relative z-10 flex flex-col items-center w-full transition-all duration-500 ${showChatbot ? 'blur-sm scale-95 opacity-50' : ''} ${isGlitching ? 'animate-shake' : ''}`}>
                 {/* Title */}
-                <div className="mb-16">
-                    <h1 className="text-6xl md:text-8xl font-bold glitch-text tracking-tighter text-center text-cyan-400" data-text="NIRD_RESISTANCE">
-                        NIRD_RESISTANCE
-                    </h1>
-                </div>
+                <GlitchWrapper intensity="high">
+                    <div className="mb-16">
+                        <h1 className="text-6xl md:text-8xl font-bold glitch-text tracking-tighter text-center text-cyan-400" data-text="NIRD_RESISTANCE">
+                            NIRD_RESISTANCE
+                        </h1>
+                    </div>
+                </GlitchWrapper>
 
                 {/* Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-4">

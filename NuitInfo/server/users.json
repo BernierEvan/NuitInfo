@@ -1,0 +1,91 @@
+[
+  {
+    "id": "1764902542008",
+    "username": "Yohan",
+    "email": "yohan.saint-marc@hotmail.com",
+    "password": "$2a$10$qgmhp3RyE3z8FzP7q2huveTOKMT0hsqD1Ed70Ev6FRe09nocSCdtG",
+    "createdAt": "2025-12-05T02:42:22.008Z",
+    "profile": {
+      "level": "beginner",
+      "pain": "neck_pain",
+      "goal": "posture",
+      "infra": "good_posture",
+      "uptime": "medium",
+      "environment": "home_no_equipment",
+      "hasPain": true,
+      "needsCore": false,
+      "needsStretch": true,
+      "needsWristCare": false,
+      "isBeginnerFriendly": true,
+      "riskScore": 4,
+      "priorities": [
+        "mobility",
+        "stretch",
+        "core"
+      ],
+      "title": "Protocole : Libération Cervicale",
+      "description": "Tensions cervicales détectées. On va libérer ta nuque et améliorer ta posture.",
+      "createdAt": "2025-12-05T03:52:58.652Z"
+    },
+    "routinesCompleted": 0
+  },
+  {
+    "id": "1764903639034",
+    "username": "Mathias",
+    "email": "mathias.leculee.rave@gmail.com",
+    "password": "$2a$10$nR2b7fbVqpPcb2Dr4xGDAOULdsWtIoBIlbOvU.wwOsaQtvrvrtIHi",
+    "createdAt": "2025-12-05T03:00:39.034Z",
+    "profile": {
+      "level": "intermediate",
+      "pain": "wrist_pain",
+      "goal": "core",
+      "infra": "bad_posture",
+      "uptime": "short",
+      "environment": "home_no_equipment",
+      "hasPain": true,
+      "needsCore": true,
+      "needsStretch": false,
+      "needsWristCare": true,
+      "isBeginnerFriendly": false,
+      "riskScore": 4,
+      "priorities": [
+        "stretch",
+        "core"
+      ],
+      "title": "Protocole : Soins Poignets",
+      "description": "Tes poignets sont sollicités. Voici des exercices pour les soulager et les renforcer.",
+      "createdAt": "2025-12-05T03:00:54.287Z"
+    },
+    "routinesCompleted": 0
+  },
+  {
+    "id": "1764905669125",
+    "username": "Maxime",
+    "email": "maxime.henault@lyceefulbert.fr",
+    "password": "$2a$10$zXY3z0bWE1WhKe9s5VrG3.bdoEfKIE7jJ9M9mO.XJPs5YjIBBjLSm",
+    "createdAt": "2025-12-05T03:34:29.126Z",
+    "profile": {
+      "level": "beginner",
+      "pain": "neck_pain",
+      "goal": "flexibility",
+      "infra": "bad_posture",
+      "uptime": "infinite",
+      "environment": "home_no_equipment",
+      "hasPain": true,
+      "needsCore": true,
+      "needsStretch": true,
+      "needsWristCare": false,
+      "isBeginnerFriendly": true,
+      "riskScore": 8,
+      "priorities": [
+        "mobility",
+        "stretch",
+        "flex"
+      ],
+      "title": "Protocole : Libération Cervicale",
+      "description": "Tensions cervicales détectées. On va libérer ta nuque et améliorer ta posture.",
+      "createdAt": "2025-12-05T03:35:58.191Z"
+    },
+    "routinesCompleted": 0
+  }
+]
