@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useVoiceSystem, PIONEER_VOICE_MAP } from '../components/VoiceSubtitleSystem';
+import GlitchWrapper from '../components/GlitchWrapper';
 
 // Records data for pioneers
 const pioneersData = [
@@ -169,7 +170,9 @@ const Records = () => {
                         <span className="text-xl">←</span>
                         <span>RETURN_TO_LOBBY</span>
                     </button>
-                    <h1 className="text-2xl font-bold text-amber-400 font-mono tracking-wider">📜 PIONEER_ARCHIVES</h1>
+                    <GlitchWrapper intensity="medium">
+                        <h1 className="text-2xl font-bold text-amber-400 font-mono tracking-wider">📜 PIONEER_ARCHIVES</h1>
+                    </GlitchWrapper>
                     <div className="text-amber-500/60 font-mono text-sm">{pioneersData.length} RECORDS</div>
                 </div>
             </div>
@@ -270,6 +273,7 @@ const Records = () => {
                         </div>
 
                         {/* Grid of pioneers */}
+
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {pioneersData.map((pioneer, index) => (
                                 <button

@@ -7,6 +7,7 @@ import Chatbot from './Chatbot';
 import SnakeGameWrapper from '../components/SnakeGameWrapper';
 import adaIcon from '../assets/ada_lovelace_chatbot.jpg';
 import { useVoiceSystem } from '../components/VoiceSubtitleSystem';
+import { useGame } from '../context/GameContext';
 
 const Lobby = () => {
     const navigate = useNavigate();
@@ -16,6 +17,22 @@ const Lobby = () => {
     const [isGlitching, setIsGlitching] = useState(false);
     const [introPlayed, setIntroPlayed] = useState(false);
     const [iconBounce, setIconBounce] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
+
+    // Game context for assessment state
+    const { isAssessmentComplete } = useGame();
+
+    // Check for logged in user
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            try {
+                setCurrentUser(JSON.parse(savedUser));
+            } catch (e) {
+                console.log('Invalid user data');
+            }
+        }
+    }, []);
 
     // Voice system
     const { playVoice, SubtitleComponent } = useVoiceSystem();
@@ -184,6 +201,52 @@ const Lobby = () => {
 
             {/* Main Content */}
             <div className={`relative z-10 flex flex-col items-center w-full transition-all duration-500 ${showChatbot ? 'blur-sm scale-95 opacity-50' : ''} ${isGlitching ? 'animate-shake' : ''}`}>
+
+                {/* User Header Bar */}
+                {currentUser && (
+                    <div className="absolute top-0 left-0 w-full z-20 p-6 flex justify-between items-start pointer-events-none">
+                        {/* Left side spacer or logo placeholder if needed */}
+                        <div className="pointer-events-auto">
+                            {/* Potential Logo Area */}
+                        </div>
+
+                        {/* Right side - User Profile & Logout */}
+                        <div className="pointer-events-auto bg-slate-900/90 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-2 flex items-center gap-4 shadow-lg shadow-cyan-500/10 transition-all hover:border-cyan-500/50 hover:shadow-cyan-500/20">
+                            {/* User Info */}
+                            <div className="flex items-center gap-3 pl-2">
+                                <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-inner">
+                                    {currentUser.username?.[0]?.toUpperCase() || '?'}
+                                </div>
+                                <div className="hidden md:block">
+                                    <p className="text-white font-bold text-sm leading-tight">{currentUser.username}</p>
+                                    <p className="text-cyan-400/60 text-[10px] font-mono tracking-wider uppercase">
+                                        // {currentUser.email?.split('@')[0]}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="h-8 w-px bg-white/10"></div>
+
+                            {/* Wide Logout Button */}
+                            <button
+                                onClick={() => {
+                                    localStorage.removeItem('token');
+                                    localStorage.removeItem('user');
+                                    setCurrentUser(null);
+                                }}
+                                className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 text-red-400 px-6 py-2.5 rounded-xl font-mono text-sm font-bold tracking-wider transition-all flex items-center gap-2 group min-w-[140px] justify-center"
+                                title="Disconnect"
+                            >
+                                <span>LOGOUT</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                )}
+
                 {/* Title */}
                 <GlitchWrapper intensity="high">
                     <div className="mb-16">
@@ -198,25 +261,33 @@ const Lobby = () => {
                     {/* Profile Card */}
                     <GlitchWrapper intensity="medium">
                         <div className="group relative">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                            <div className={`absolute -inset-0.5 bg-gradient-to-r ${isAssessmentComplete ? 'from-green-500 to-cyan-500' : 'from-cyan-500 to-purple-500'} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`}></div>
                             <button
-                                onClick={() => navigate('/profile')}
-                                className="relative w-full h-80 rounded-2xl overflow-hidden border border-cyan-500/30 bg-gradient-to-b from-gray-900 to-black hover:border-cyan-400 transition-all duration-500 flex flex-col"
+                                onClick={() => isAssessmentComplete ? navigate('/profile') : navigate('/assessment')}
+                                className={`relative w-full h-80 rounded-2xl overflow-hidden border ${isAssessmentComplete ? 'border-green-500/30 hover:border-green-400' : 'border-cyan-500/30 hover:border-cyan-400'} bg-gradient-to-b from-gray-900 to-black transition-all duration-500 flex flex-col`}
                             >
                                 <div className="flex-1 p-6 flex flex-col justify-between">
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-cyan-400 text-3xl">👤</span>
-                                            <span className="text-red-500 text-xs font-mono bg-red-500/10 border border-red-500/30 px-2 py-1 rounded">LOCKED</span>
+                                            <span className="text-cyan-400 text-3xl"></span>
+                                            {isAssessmentComplete ? (
+                                                <span className="text-green-500 text-xs font-mono bg-green-500/10 border border-green-500/30 px-2 py-1 rounded">UNLOCKED</span>
+                                            ) : (
+                                                <span className="text-red-500 text-xs font-mono bg-red-500/10 border border-red-500/30 px-2 py-1 rounded">LOCKED</span>
+                                            )}
                                         </div>
-                                        <h2 className="text-3xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">PROFILE</h2>
-                                        <p className="text-cyan-500/60 font-mono text-sm mt-2">// ACCESS_DENIED</p>
+                                        <h2 className={`text-3xl font-bold text-white ${isAssessmentComplete ? 'group-hover:text-green-400' : 'group-hover:text-cyan-400'} transition-colors duration-300`}>PROFILE</h2>
+                                        <p className={`${isAssessmentComplete ? 'text-green-500/60' : 'text-cyan-500/60'} font-mono text-sm mt-2`}>
+                                            {isAssessmentComplete ? '// ACCESS_GRANTED' : '// ACCESS_DENIED'}
+                                        </p>
                                     </div>
                                     <p className="text-gray-500 text-sm leading-relaxed">
-                                        User data encrypted. Clearance level insufficient.
+                                        {isAssessmentComplete
+                                            ? 'Your survival protocol is ready. View your personalized training program.'
+                                            : 'Complete the assessment to unlock your profile.'}
                                     </p>
                                 </div>
-                                <div className="h-1 w-full bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
+                                <div className={`h-1 w-full bg-gradient-to-r from-transparent ${isAssessmentComplete ? 'via-green-500/50' : 'via-cyan-500/50'} to-transparent`}></div>
                             </button>
                         </div>
                     </GlitchWrapper>
@@ -232,7 +303,7 @@ const Lobby = () => {
                                 <div className="flex-1 p-6 flex flex-col justify-between">
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-amber-400 text-3xl">📜</span>
+                                            <span className="text-amber-400 text-3xl"></span>
                                             <span className="text-amber-400 text-xs font-mono bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded">ARCHIVES</span>
                                         </div>
                                         <h2 className="text-3xl font-bold text-white group-hover:text-amber-400 transition-colors duration-300">RECORDS</h2>
@@ -250,25 +321,35 @@ const Lobby = () => {
                     {/* Assessment Card */}
                     <GlitchWrapper intensity="high">
                         <div className="group relative">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                            <div className={`absolute -inset-0.5 bg-gradient-to-r ${isAssessmentComplete ? 'from-green-500 to-emerald-500' : 'from-purple-500 to-pink-500'} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`}></div>
                             <button
                                 onClick={() => navigate('/assessment')}
-                                className="relative w-full h-80 rounded-2xl overflow-hidden border border-purple-500/30 bg-gradient-to-b from-gray-900 to-black hover:border-purple-400 transition-all duration-500 flex flex-col"
+                                className={`relative w-full h-80 rounded-2xl overflow-hidden border ${isAssessmentComplete ? 'border-green-500/30 hover:border-green-400' : 'border-purple-500/30 hover:border-purple-400'} bg-gradient-to-b from-gray-900 to-black transition-all duration-500 flex flex-col`}
                             >
                                 <div className="flex-1 p-6 flex flex-col justify-between">
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-purple-400 text-3xl">🎯</span>
-                                            <span className="text-purple-400 text-xs font-mono bg-purple-500/10 border border-purple-500/30 px-2 py-1 rounded">REQUIRED</span>
+                                            <span className={`${isAssessmentComplete ? 'text-green-400' : 'text-purple-400'} text-3xl`}>
+                                                {isAssessmentComplete ? '✅' : '🎯'}
+                                            </span>
+                                            {isAssessmentComplete ? (
+                                                <span className="text-green-400 text-xs font-mono bg-green-500/10 border border-green-500/30 px-2 py-1 rounded">COMPLETE</span>
+                                            ) : (
+                                                <span className="text-purple-400 text-xs font-mono bg-purple-500/10 border border-purple-500/30 px-2 py-1 rounded">REQUIRED</span>
+                                            )}
                                         </div>
-                                        <h2 className="text-3xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">ASSESSMENT</h2>
-                                        <p className="text-purple-500/60 font-mono text-sm mt-2">// PENDING</p>
+                                        <h2 className={`text-3xl font-bold text-white ${isAssessmentComplete ? 'group-hover:text-green-400' : 'group-hover:text-purple-400'} transition-colors duration-300`}>ASSESSMENT</h2>
+                                        <p className={`${isAssessmentComplete ? 'text-green-500/60' : 'text-purple-500/60'} font-mono text-sm mt-2`}>
+                                            {isAssessmentComplete ? '// DIAGNOSTIC_COMPLETE' : '// PENDING'}
+                                        </p>
                                     </div>
                                     <p className="text-gray-500 text-sm leading-relaxed">
-                                        Begin the evaluation protocol. Prove your worth.
+                                        {isAssessmentComplete
+                                            ? 'Assessment complete. Retake to update your profile.'
+                                            : 'Begin the evaluation protocol. Prove your worth.'}
                                     </p>
                                 </div>
-                                <div className="h-1 w-full bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+                                <div className={`h-1 w-full bg-gradient-to-r from-transparent ${isAssessmentComplete ? 'via-green-500/50' : 'via-purple-500/50'} to-transparent`}></div>
                             </button>
                         </div>
                     </GlitchWrapper>

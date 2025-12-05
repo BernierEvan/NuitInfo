@@ -30,14 +30,21 @@ export const AILines = [
 ];
 
 export const GameProvider = ({ children }) => {
-    const [isAssessmentComplete, setIsAssessmentComplete] = useState(false);
-    const [userProfile, setUserProfile] = useState(null);
+    const [isAssessmentComplete, setIsAssessmentComplete] = useState(() => {
+        return localStorage.getItem('isAssessmentComplete') === 'true';
+    });
+    const [userProfile, setUserProfile] = useState(() => {
+        const saved = localStorage.getItem('userProfile');
+        return saved ? JSON.parse(saved) : null;
+    });
     const [showCinematic, setShowCinematic] = useState(false);
     const [cinematicContent, setCinematicContent] = useState(null);
 
     const completeAssessment = (profile) => {
         setUserProfile(profile);
         setIsAssessmentComplete(true);
+        localStorage.setItem('userProfile', JSON.stringify(profile));
+        localStorage.setItem('isAssessmentComplete', 'true');
     };
 
     const triggerCinematic = (content) => {
