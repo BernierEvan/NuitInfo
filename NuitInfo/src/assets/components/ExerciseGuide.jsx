@@ -7,37 +7,44 @@ import ProductRecommender from './ProductRecommender';
 
 const ExerciseGuide = () => {
   const { profile, resetProfile } = useUser();
-  const [selectedType, setSelectedType] = useState('all');
+  const [selectedType, setSelectedType] = useState('recommended');
   const [showProducts, setShowProducts] = useState(true);
 
-  // Filtrer et trier les exercices selon le profil
-  const sortedExercises = useMemo(() => {
+  // Définition des exercices par niveau (avec nouveaux exos)
+  const exercisesByLevel = {
+    beginner: ['plank', 'child_pose', 'cat_cow', 'wrist_stretch', 'neck_rotation', 'shoulder_stretch', 'glute_bridge'],
+    intermediate: ['plank', 'squat', 'child_pose', 'cat_cow', 'hip_flexor_stretch', 'dead_bug', 'wrist_stretch', 'neck_rotation', 'wall_angels', 'standing_calf_stretch'],
+    expert: exercisesData.map(e => e.id)
+  };
+
+  // Filtrer les exercices selon le profil
+  const filteredExercises = useMemo(() => {
     if (!profile) return exercisesData;
 
     let exercises = [...exercisesData];
+    const level = profile.level || 'beginner';
 
-    // Filtrer par type si sélectionné
-    if (selectedType !== 'all') {
+    if (selectedType === 'recommended') {
+      const allowedIds = exercisesByLevel[level] || exercisesByLevel.beginner;
+      exercises = exercises.filter(e => allowedIds.includes(e.id));
+
+      exercises.sort((a, b) => {
+        const aMatch = profile.priorities.includes(a.type) ? 10 : 0;
+        const bMatch = profile.priorities.includes(b.type) ? 10 : 0;
+        return bMatch - aMatch;
+      });
+
+      if (level === 'beginner') exercises = exercises.slice(0, 5);
+      else if (level === 'intermediate') exercises = exercises.slice(0, 7);
+    } else if (selectedType !== 'all') {
       exercises = exercises.filter(e => e.type === selectedType);
     }
-
-    // Trier par priorité (les exercices qui matchent le profil en premier)
-    exercises.sort((a, b) => {
-      const aScore = profile.priorities.includes(a.type) ? 1 : 0;
-      const bScore = profile.priorities.includes(b.type) ? 1 : 0;
-      return bScore - aScore;
-    });
 
     return exercises;
   }, [profile, selectedType]);
 
-  // Types disponibles pour le filtre
-  const exerciseTypes = useMemo(() => {
-    const types = [...new Set(exercisesData.map(e => e.type))];
-    return types;
-  }, []);
+  const exerciseTypes = useMemo(() => [...new Set(exercisesData.map(e => e.type))], []);
 
-  // Labels pour les types
   const typeLabels = {
     'core': '💪 Gainage',
     'legs': '🦵 Jambes',
@@ -46,16 +53,10 @@ const ExerciseGuide = () => {
     'mobility': '🔄 Mobilité'
   };
 
-  // Couleurs pour les badges de priorité
-  const getPriorityBadge = (type) => {
-    if (profile?.priorities.includes(type)) {
-      return (
-        <span className="absolute -top-2 -right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg animate-pulse">
-          RECOMMANDÉ
-        </span>
-      );
-    }
-    return null;
+  const levelLabels = {
+    'beginner': { text: '🌱 Débutant', color: 'green' },
+    'intermediate': { text: '💪 Intermédiaire', color: 'blue' },
+    'expert': { text: '⚡ Expert', color: 'purple' }
   };
 
   if (!profile) {
@@ -66,34 +67,31 @@ const ExerciseGuide = () => {
     );
   }
 
-  // Récupérer les produits recommandés basés sur le profil
   const getProfileProducts = () => {
     const allProducts = [];
-    sortedExercises.forEach(exo => {
-      exo.products.forEach(productId => {
-        if (!allProducts.includes(productId)) {
-          allProducts.push(productId);
-        }
+    filteredExercises.forEach(exo => {
+      exo.products?.forEach(productId => {
+        if (!allProducts.includes(productId)) allProducts.push(productId);
       });
     });
-    return allProducts.slice(0, 4); // Max 4 produits
+    return allProducts.slice(0, 4);
   };
 
-  return (
-    <div className="animate-fade-in max-w-7xl mx-auto">
+  const level = levelLabels[profile.level] || levelLabels.beginner;
 
-      {/* === HEADER PROFIL === */}
+  return (
+    <div className="max-w-7xl mx-auto">
+
+      {/* HEADER PROFIL */}
       <div className="bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 rounded-2xl p-8 mb-8 text-white shadow-2xl">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-
-          {/* Info Profil */}
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-3">
-              <span className="bg-green-400/20 text-green-300 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-green-400/30">
-                {profile.level === 'beginner' ? '🌱 Junior Dev' : profile.level === 'expert' ? '⚡ Lead Dev' : '💻 Dev Confirmé'}
+              <span className="bg-green-400/20 text-green-300 px-3 py-1 rounded-full text-xs font-bold uppercase border border-green-400/30">
+                {level.text}
               </span>
               {profile.riskScore >= 5 && (
-                <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-red-400/30">
+                <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-xs font-bold uppercase border border-red-400/30">
                   ⚠️ Risque Élevé
                 </span>
               )}
@@ -102,29 +100,24 @@ const ExerciseGuide = () => {
             <p className="text-blue-200 text-lg italic max-w-2xl">{profile.description}</p>
           </div>
 
-          {/* Score de risque */}
-          <div className="bg-white/10 rounded-xl p-5 backdrop-blur-sm border border-white/20 text-center min-w-[160px]">
-            <div className="text-5xl font-black mb-1">
-              {profile.riskScore}
-              <span className="text-2xl text-white/60">/10</span>
+          <div className="flex gap-4">
+            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 text-center">
+              <div className="text-4xl font-black">{filteredExercises.length}</div>
+              <div className="text-blue-200 text-xs font-medium">Exercices</div>
             </div>
-            <div className="text-blue-200 text-sm font-medium">Score de Risque</div>
-            <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all duration-700 ${profile.riskScore >= 7 ? 'bg-red-500' :
-                    profile.riskScore >= 4 ? 'bg-yellow-400' : 'bg-green-400'
-                  }`}
-                style={{ width: `${profile.riskScore * 10}%` }}
-              />
+            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 text-center">
+              <div className={`text-4xl font-black ${profile.riskScore >= 7 ? 'text-red-400' : profile.riskScore >= 4 ? 'text-yellow-400' : 'text-green-400'}`}>
+                {profile.riskScore}/10
+              </div>
+              <div className="text-blue-200 text-xs font-medium">Risque</div>
             </div>
           </div>
         </div>
 
-        {/* Tags du profil */}
         <div className="flex flex-wrap gap-2 mt-6 pt-6 border-t border-white/10">
           {profile.hasPain && (
             <span className="bg-orange-500/20 text-orange-300 px-3 py-1 rounded-lg text-xs font-medium border border-orange-400/30">
-              🩹 Douleur détectée : {profile.pain.replace('_pain', '').replace('_', ' ')}
+              🩹 {profile.pain.replace('_pain', '').replace('back', 'Dos').replace('neck', 'Nuque').replace('wrist', 'Poignets')}
             </span>
           )}
           {profile.needsCore && (
@@ -134,93 +127,97 @@ const ExerciseGuide = () => {
           )}
           {profile.needsStretch && (
             <span className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-lg text-xs font-medium border border-purple-400/30">
-              🧘 Étirements recommandés
-            </span>
-          )}
-          {profile.isBeginnerFriendly && (
-            <span className="bg-green-500/20 text-green-300 px-3 py-1 rounded-lg text-xs font-medium border border-green-400/30">
-              🌱 Adapté débutants
+              🧘 Étirements
             </span>
           )}
         </div>
       </div>
 
-      {/* === FILTRES === */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <div className="flex flex-wrap gap-2">
+      {/* FILTRES */}
+      <div className="bg-white rounded-xl p-4 shadow-lg mb-6">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => setSelectedType('recommended')}
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${selectedType === 'recommended'
+              ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+          >
+            ⭐ Pour toi
+          </button>
           <button
             onClick={() => setSelectedType('all')}
             className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${selectedType === 'all'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+              ? 'bg-blue-600 text-white shadow-lg'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
           >
-            Tous les exercices
+            Tous ({exercisesData.length})
           </button>
+          <div className="w-px h-8 bg-gray-300 mx-2" />
           {exerciseTypes.map(type => (
             <button
               key={type}
               onClick={() => setSelectedType(type)}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all relative ${selectedType === type
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+              className={`px-3 py-2 rounded-lg font-medium text-sm transition-all ${selectedType === type
+                ? 'bg-blue-600 text-white shadow-lg'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
             >
               {typeLabels[type] || type}
-              {profile.priorities.includes(type) && selectedType !== type && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full" />
-              )}
             </button>
           ))}
         </div>
-
-        <div className="text-sm text-gray-500">
-          {sortedExercises.length} exercice{sortedExercises.length > 1 ? 's' : ''} disponible{sortedExercises.length > 1 ? 's' : ''}
-        </div>
       </div>
 
-      {/* === GRILLE DES EXERCICES === */}
+      {/* Info niveau */}
+      {selectedType === 'recommended' && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+          <p className="text-sm text-gray-700">
+            <span className="font-bold">Niveau {level.text}</span> —
+            {profile.level === 'beginner' && " Exercices simples et accessibles pour bien démarrer !"}
+            {profile.level === 'intermediate' && " Tu as les bases, on ajoute des exercices plus ciblés."}
+            {profile.level === 'expert' && " Tu peux tout faire ! Voici une sélection complète."}
+          </p>
+        </div>
+      )}
+
+      {/* GRILLE EXERCICES */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-10">
-        {sortedExercises.map((exo, index) => (
-          <div key={exo.id} className="relative" style={{ animationDelay: `${index * 100}ms` }}>
-            {getPriorityBadge(exo.type)}
+        {filteredExercises.map((exo, index) => (
+          <div key={exo.id} className="relative animate-fadeIn" style={{ animationDelay: `${index * 80}ms` }}>
+            {profile.priorities.includes(exo.type) && (
+              <span className="absolute -top-2 -right-2 z-10 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
+                RECOMMANDÉ
+              </span>
+            )}
             <ExerciseDetail exercise={exo} />
           </div>
         ))}
       </div>
 
-      {/* === SECTION PRODUITS RECOMMANDÉS === */}
+      {/* PRODUITS */}
       <div className="bg-gradient-to-r from-gray-900 to-blue-900 rounded-2xl p-8 shadow-2xl mb-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-2xl font-bold text-white mb-1">🛒 Hardware Recommandé</h3>
-            <p className="text-gray-400 text-sm">Équipements sélectionnés pour ton profil</p>
+            <h3 className="text-2xl font-bold text-white mb-1">🛒 Équipements Conseillés</h3>
+            <p className="text-gray-400 text-sm">Sélectionnés pour ton niveau</p>
           </div>
-          <button
-            onClick={() => setShowProducts(!showProducts)}
-            className="text-blue-300 hover:text-white transition-colors text-sm"
-          >
+          <button onClick={() => setShowProducts(!showProducts)} className="text-blue-300 hover:text-white text-sm">
             {showProducts ? 'Masquer' : 'Afficher'}
           </button>
         </div>
-
-        {showProducts && (
-          <ProductRecommender productIds={getProfileProducts()} isGlobal={true} />
-        )}
+        {showProducts && <ProductRecommender productIds={getProfileProducts()} isGlobal={true} />}
       </div>
 
-      {/* === BOUTON RELANCER === */}
+      {/* BOUTON REFAIRE */}
       <div className="text-center">
         <button
-          onClick={() => {
-            resetProfile();
-            window.location.reload();
-          }}
-          className="bg-gradient-to-r from-gray-700 to-gray-900 text-white px-8 py-4 rounded-xl font-bold hover:from-gray-600 hover:to-gray-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          onClick={() => { resetProfile(); window.location.reload(); }}
+          className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-bold transition-all"
         >
-          🔄 Relancer le Diagnostic Complet
+          🔄 Refaire le Diagnostic
         </button>
-        <p className="text-gray-400 text-sm mt-2">Modifier ton profil pour obtenir de nouvelles recommandations</p>
       </div>
     </div>
   );

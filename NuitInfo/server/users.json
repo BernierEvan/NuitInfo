@@ -7,26 +7,53 @@
     "createdAt": "2025-12-05T02:42:22.008Z",
     "profile": {
       "level": "expert",
-      "pain": "neck_pain",
-      "goal": "strength",
+      "pain": "no_pain",
+      "goal": "recovery",
       "infra": "mixed_posture",
-      "uptime": "long",
+      "uptime": "infinite",
       "environment": "home_no_equipment",
-      "hasPain": true,
+      "hasPain": false,
       "needsCore": false,
       "needsStretch": true,
       "needsWristCare": false,
       "isBeginnerFriendly": false,
-      "riskScore": 5,
+      "riskScore": 4,
       "priorities": [
-        "mobility",
+        "flex",
+        "stretch"
+      ],
+      "title": "Protocole : Maintenance Préventive",
+      "description": "Tu restes trop longtemps assis ! Il est temps de bouger et de relancer la circulation.",
+      "createdAt": "2025-12-05T03:08:20.280Z"
+    },
+    "routinesCompleted": 0
+  },
+  {
+    "id": "1764903639034",
+    "username": "Mathias",
+    "email": "mathias.leculee.rave@gmail.com",
+    "password": "$2a$10$nR2b7fbVqpPcb2Dr4xGDAOULdsWtIoBIlbOvU.wwOsaQtvrvrtIHi",
+    "createdAt": "2025-12-05T03:00:39.034Z",
+    "profile": {
+      "level": "intermediate",
+      "pain": "wrist_pain",
+      "goal": "core",
+      "infra": "bad_posture",
+      "uptime": "short",
+      "environment": "home_no_equipment",
+      "hasPain": true,
+      "needsCore": true,
+      "needsStretch": false,
+      "needsWristCare": true,
+      "isBeginnerFriendly": false,
+      "riskScore": 4,
+      "priorities": [
         "stretch",
-        "legs",
         "core"
       ],
-      "title": "Protocole : Libération Cervicale",
-      "description": "Tensions cervicales détectées. On va libérer ta nuque et améliorer ta posture.",
-      "createdAt": "2025-12-05T02:44:55.684Z"
+      "title": "Protocole : Soins Poignets",
+      "description": "Tes poignets sont sollicités. Voici des exercices pour les soulager et les renforcer.",
+      "createdAt": "2025-12-05T03:00:54.287Z"
     },
     "routinesCompleted": 0
   }
